@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e4ba1a7d376f37438d9f47aeb2be3da, type: 3}
+  m_Name: BackgroundMusic
+  m_EditorClassIdentifier: 
+  LoopingAudio:
+  - {fileID: 8300000, guid: d46da35a7237c42498023e1bbe465f09, type: 3}
+  - {fileID: 8300000, guid: 6597e4d85b5e3ba45bf850f5a80c4cba, type: 3}
+  - {fileID: 8300000, guid: 987b3945f454116478e0aae20ab9f32b, type: 3}
+  - {fileID: 8300000, guid: beae3158764844448aae9b7d127f659f, type: 3}
+  - {fileID: 8300000, guid: ad9858c297d7b144b9182eee4a47e9c4, type: 3}
+  MusicTracks:
+  - {fileID: 8300000, guid: 8b07232f925f41445ac03a706f52d56a, type: 3}
+  - {fileID: 8300000, guid: 0b95e7e0851da50489a41e677ed32c3a, type: 3}
+  - {fileID: 8300000, guid: 2213e189092ee7f459c2c6d97c323f6a, type: 3}
+  - {fileID: 8300000, guid: 2661c0b067d8c044e90012ef02e8c4b9, type: 3}
+  - {fileID: 8300000, guid: 904eb07cdf160fb449fb804bdac785d0, type: 3}
