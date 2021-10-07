@@ -1,32 +1,32 @@
 ﻿
 public enum AudioSceneTrigger
 {
-    Undefined = 0,
+  Undefined = 0,
 
-    None,
+  None,
 
-    SceneStart,
-    SceneEnd,
+  SceneStart,
+  SceneEnd,
 
-    SceneStartAndEnd
+  SceneStartAndEnd
 }
 
 public enum AudioTrigger
 {
-    Undefined = 0,
+  Undefined = 0,
 
-    Laser_Player,
-    Laser_Enemy,
-    Laser_Impact,
+  Laser_Player,
+  Laser_Enemy,
+  Laser_Impact,
 
-    Missile_Fire,
-    Missile_Impact
+  Missile_Fire,
+  Missile_Impact
 }
 
 public enum BackgroundMusicType
 {
-    Undefined = 0,
+  Undefined = 0,
 
-    Loop,
-    Song
+  Loop,
+  Song
 }

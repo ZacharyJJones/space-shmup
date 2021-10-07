@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{6C92B992-A2F8-D0B9-1CAB-D7D36F8EE652}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DanmakU", "DanmakU.csproj", "{4CD8EDC1-21E7-8AAA-5754-29DF69915DE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{A1EA428B-25C3-1633-AD53-CD5954E2DB73}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C92B992-A2F8-D0B9-1CAB-D7D36F8EE652}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C92B992-A2F8-D0B9-1CAB-D7D36F8EE652}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CD8EDC1-21E7-8AAA-5754-29DF69915DE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CD8EDC1-21E7-8AAA-5754-29DF69915DE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1EA428B-25C3-1633-AD53-CD5954E2DB73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1EA428B-25C3-1633-AD53-CD5954E2DB73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {943DD533-4F64-4F29-9A57-8D22988F5377}
+	EndGlobalSection
+EndGlobal

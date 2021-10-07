@@ -6,41 +6,30 @@ using UnityEngine.UI;
 
 public class NowPlayingNotifier : MonoBehaviour
 {
-    public RectTransform NotificationPanel;
-    public Vector3 PanelVisiblePosition;
     public Text SongNameDisplay;
-    public float LerpTime;
+    public RectTransform NotificationPanel;
 
-    // how long the panel is visible for before being hidden
-    public float VisibleDuration;
-
-
+    public Vector3 PanelVisiblePosition;
     private Vector3 _panelHiddenPosition;
 
+    public float LerpTime;
+    public float VisibleDuration;
 
-
-
-    void Awake()
+    void Start()
     {
+        Debug.Log("Starting");
         _panelHiddenPosition = NotificationPanel.position;
     }
 
-
     public void ShowPanel(string songName)
     {
+        Debug.Log("Panel Beginning to be shown.");
         songName = songName.Replace(" Loop", "");
         SongNameDisplay.text = $"<b>{songName}</b>";
-        _showPanel();
-    }
-
-
-
-    void _showPanel()
-    {
         StartCoroutine(_panelLerpCommon(LerpTime, _panelHiddenPosition, PanelVisiblePosition));
         StartCoroutine(_simpleWait(LerpTime + VisibleDuration, () => _hidePanel()));
     }
-    
+
     void _hidePanel()
     {
         StartCoroutine(_panelLerpCommon(LerpTime, PanelVisiblePosition, _panelHiddenPosition));
@@ -48,6 +37,7 @@ public class NowPlayingNotifier : MonoBehaviour
 
     IEnumerator _simpleWait(float waitTime, Action onComplete)
     {
+        Debug.Log("Starting to wait.");
         for (float time = 0; time < waitTime; time += Time.deltaTime)
         {
             yield return null;
@@ -58,6 +48,7 @@ public class NowPlayingNotifier : MonoBehaviour
 
     IEnumerator _panelLerpCommon(float duration, Vector3 start, Vector3 end)
     {
+        Debug.Log("Starting to Lerp.");
         for (float time = 0; time < duration; time += Time.deltaTime)
         {
             float lerpVal = time / duration;
@@ -66,7 +57,8 @@ public class NowPlayingNotifier : MonoBehaviour
             yield return null;
         }
 
-        NotificationPanel.position = Vector3.Lerp(start, end, 1f);
+        Debug.Log("Done Lerping.");
+        NotificationPanel.position = end;
     }
 
 }

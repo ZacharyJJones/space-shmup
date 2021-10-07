@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "BackgroundMusic", menuName = "ScriptableObjects/BackgroundMusic")]
 public class BackgroundMusicScriptable : ScriptableObject
@@ -8,56 +9,37 @@ public class BackgroundMusicScriptable : ScriptableObject
     public AudioClip[] LoopingAudio;
     public AudioClip[] MusicTracks;
 
-    private int _lastLoopingAudio = -1;
-    private int _lastMusicTrack = -1;
+    private int _indexOfLastLoopingAudio = -1;
+    private int _indexOfLastMusicTrack = -1;
 
-       
-
-    public AudioClip GetRandom(BackgroundMusicType type, out BackgroundMusicType otherType)
+    public AudioClip GetRandomNoRepeat(BackgroundMusicType type)
     {
-        // set up out var here for simplification
-        otherType = BackgroundMusicType.Undefined;
+        if (type == BackgroundMusicType.Loop)
+        {
+            return _getRandomNoRepeat(LoopingAudio, _indexOfLastLoopingAudio);
+        }
+        else if (type == BackgroundMusicType.Song)
+        {
+            return _getRandomNoRepeat(MusicTracks, _indexOfLastMusicTrack);
+        }
+        else
+        {
+            return null;
+        }
+    }
 
-
-        // check for invalid input
-        if (type != BackgroundMusicType.Loop
-        &&  type != BackgroundMusicType.Song)
+    private AudioClip _getRandomNoRepeat(AudioClip[] array, int lastSelected)
+    {
+        if (array.Length == 1)
+        {
+            return array[0];
+        }
+        if (array.Length == 0)
         {
             return null;
         }
 
-
-        // set up variables to be used
-        AudioClip[] array = (type == BackgroundMusicType.Loop) ? LoopingAudio : MusicTracks;
-        int lastSelected = (type == BackgroundMusicType.Loop) ? _lastLoopingAudio : _lastMusicTrack;
-
-
-        // special cases for specific array sizes
-        if (array.Length == 1) return array[0];
-        else if (array.Length == 0) return null;
-
-
-        // this loop is used so that the same song won't be played twice in a row
-        int selectedIndex = lastSelected;
-        while (selectedIndex == lastSelected)
-        {
-            selectedIndex = Random.Range(0, array.Length);
-        }
-
-
-        // record which song was played, and what the 'other' type is
-        if (type == BackgroundMusicType.Loop)
-        {
-            _lastLoopingAudio = selectedIndex;
-            otherType = BackgroundMusicType.Song;
-        }
-        else
-        {
-            _lastMusicTrack = selectedIndex;
-            otherType = BackgroundMusicType.Loop;
-        }
-
-        // return the result!
-        return array[selectedIndex];
+        var validOptions = array.Where((x, i) => i != lastSelected).ToArray();
+        return validOptions[Random.Range(0, validOptions.Length)];
     }
 }
