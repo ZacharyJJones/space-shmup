@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using UnityEngine.UI;
 
+[SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Local")]
 public class NowPlayingNotifier : MonoBehaviour
 {
+    // Editor Fields
     public Text SongNameDisplay;
     public RectTransform NotificationPanel;
 
@@ -15,29 +17,30 @@ public class NowPlayingNotifier : MonoBehaviour
     public float LerpTime;
     public float VisibleDuration;
 
-    void Start()
+
+    private void Start()
     {
-        Debug.Log("Starting");
         _panelHiddenPosition = NotificationPanel.position;
     }
 
-    public void ShowPanel(string songName)
+    public void NotifyPlayingSong(string songName)
     {
-        Debug.Log("Panel Beginning to be shown.");
-        songName = songName.Replace(" Loop", "");
+        songName = songName.Replace("Loop", "").Trim();
         SongNameDisplay.text = $"<b>{songName}</b>";
-        StartCoroutine(_panelLerpCommon(LerpTime, _panelHiddenPosition, PanelVisiblePosition));
-        StartCoroutine(_simpleWait(LerpTime + VisibleDuration, () => _hidePanel()));
-    }
 
-    void _hidePanel()
+        // Show Panel right away
+        StartCoroutine(_panelLerpCommon(LerpTime, _panelHiddenPosition, PanelVisiblePosition));
+
+        // Schedule to Hide Panel
+        StartCoroutine(_simpleWait(LerpTime + VisibleDuration, _hidePanel));
+    }
+    private void _hidePanel()
     {
         StartCoroutine(_panelLerpCommon(LerpTime, PanelVisiblePosition, _panelHiddenPosition));
     }
 
-    IEnumerator _simpleWait(float waitTime, Action onComplete)
+    private IEnumerator _simpleWait(float waitTime, Action onComplete)
     {
-        Debug.Log("Starting to wait.");
         for (float time = 0; time < waitTime; time += Time.deltaTime)
         {
             yield return null;
@@ -46,19 +49,14 @@ public class NowPlayingNotifier : MonoBehaviour
         onComplete.Invoke();
     }
 
-    IEnumerator _panelLerpCommon(float duration, Vector3 start, Vector3 end)
+    private IEnumerator _panelLerpCommon(float duration, Vector3 start, Vector3 end)
     {
-        Debug.Log("Starting to Lerp.");
         for (float time = 0; time < duration; time += Time.deltaTime)
         {
-            float lerpVal = time / duration;
-            NotificationPanel.position = Vector3.Lerp(start, end, lerpVal);
-
+            NotificationPanel.position = Vector3.Lerp(start, end, time / duration);
             yield return null;
         }
 
-        Debug.Log("Done Lerping.");
         NotificationPanel.position = end;
     }
-
 }

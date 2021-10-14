@@ -3,40 +3,25 @@ using UnityEngine;
 
 public class BackgroundMusicManager : MonoBehaviour
 {
-    // singleton pattern
-    public static BackgroundMusicManager Instance;
-    public static bool InstanceExists = (Instance != null);
-
-
+    // Editor Fields
+    private static BackgroundMusicManager Instance;
     [Range(0, 1)]
     public float MusicVolume;
-
     public BackgroundMusicScriptable BackgroundMusic;
-
     public NowPlayingNotifier NowPlayingNotifier;
 
+    // Runtime Fields
     private AudioSource _loopMusicSource;
     private AudioSource _songMusicSource;
 
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        if (InstanceExists)
-        {
-            // Need to update the "now playing notifier"
-            Instance.NowPlayingNotifier = this.NowPlayingNotifier;
-
-            // get rid of this non-singleton
-            Destroy(gameObject);
-            return;
-        }
-        else
+        if (Instance == null)
         {
             Instance = this;
             transform.SetParent(null);
             DontDestroyOnLoad(this.gameObject);
-
 
             // set up audio sources to play audio from
             _loopMusicSource = gameObject.AddComponent<AudioSource>();
@@ -45,11 +30,15 @@ public class BackgroundMusicManager : MonoBehaviour
             // start off with a looping track.
             StartCoroutine(_scheduleMusicToPlay(0f));
         }
+        else
+        {
+            // Only relevant info is the scene-specific NowPlayingNotifier script.
+            Instance.NowPlayingNotifier = this.NowPlayingNotifier;
+            Destroy(gameObject);
+        }
     }
 
-
-
-    IEnumerator _scheduleMusicToPlay(float timeUntilStart)
+    private IEnumerator _scheduleMusicToPlay(float timeUntilStart)
     {
         while (timeUntilStart >= 0)
         {
@@ -64,7 +53,7 @@ public class BackgroundMusicManager : MonoBehaviour
 
     private float _playTrack(AudioSource source, AudioClip clip)
     {
-        NowPlayingNotifier.ShowPanel(clip.name);
+        NowPlayingNotifier.NotifyPlayingSong(clip.name);
         source.PlayOneShot(clip, MusicVolume);
         return clip.length;
     }

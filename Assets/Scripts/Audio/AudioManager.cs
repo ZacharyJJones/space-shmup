@@ -1,234 +1,100 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
-    public static bool InstanceExists => (Instance != null);
-
-
-
-
-    // 'singleton' stuff
-    public AudioManagerScriptable GlobalAudio;
-    public AudioManagerScriptable ThisSceneAudio { get; set; }
-
-    public Dictionary<AudioTrigger, Audio> AudioByTrigger { get; set; }
 
     private bool _isSingletonInstance { get; set; } = false;
-    private List<AudioTrigger> _sceneEndAudioTriggers { get; set; }
+
+    [SerializeField]
+    private AudioManagerScriptable GlobalAudio;
+    [SerializeField]
+    private AudioManagerScriptable SceneAudio;
+
+    private Dictionary<AudioTrigger, Audio> _audioByTrigger { get; set; }
 
 
-    // 'local' stuff
-    public AudioManagerScriptable SceneAudio;
-
-
-
-
-
-
-    void Start()
+    private void Start()
     {
-        AudioByTrigger = new Dictionary<AudioTrigger, Audio> { };
-
-        // only the singleton distance actually handles playing the audio. The other instances simply provide it with more data to use.
-        if (InstanceExists)
+        // First-Instance Setup
+        if (Instance == null)
         {
-            SceneManager.sceneLoaded += _onSceneLoad;
+            // set up as singleton
+            Instance = this;
+            _isSingletonInstance = true;
+            SceneManager.sceneLoaded += _cleanupAudioDict;
+
+            _audioByTrigger = new Dictionary<AudioTrigger, Audio> { };
+
+            transform.SetParent(null);
+            DontDestroyOnLoad(this.gameObject);
+
+            // Only the singleton instantiation loads shared audio, because
+            // ... "shared audio" is the same data between all managers.
+            if (GlobalAudio)
+                _loadAudio(GlobalAudio.GetClone(), true);
         }
 
-        _onStartSetup();
+        // Always load the current scene's audio into the singleton
+        if (SceneAudio)
+            Instance._loadAudio(SceneAudio.GetClone());
+
+        if (!_isSingletonInstance)
+            Destroy(this);
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        // only the singleton distance actually handles playing the audio. The other instances simply provide it with more data to use.
         if (_isSingletonInstance)
         {
-            SceneManager.sceneLoaded -= _onSceneLoad;
-        }
-    }
-
-
-
-
-    public Audio GetAudio(AudioTrigger trigger)
-    {
-        AudioByTrigger.TryGetValue(trigger, out var audio);
-        return audio;
-    }
-
-
-    public void PlayTriggers(IEnumerable<AudioTrigger> triggers)
-    {
-        foreach (AudioTrigger trigger in triggers)
-        {
-            PlayTrigger(trigger);
+            SceneManager.sceneLoaded -= _cleanupAudioDict;
         }
     }
 
     public void PlayTrigger(AudioTrigger trigger)
     {
-        if (!AudioByTrigger.TryGetValue(trigger, out var audio))
-        {
-            return;
-        }
-
-        audio.Play();
+        _audioByTrigger[trigger].Play();
     }
 
-    public void LoadAudio(AudioManagerScriptable audioScriptable, bool isGlobal = false)
+    private void _loadAudio(IEnumerable<Audio> audios, bool isSharedAudio = false)
     {
-        if (audioScriptable == null)
+        foreach (var triggeredAudio in audios)
         {
-            return;
-        }
+            if (_audioByTrigger.ContainsKey(triggeredAudio.Trigger))
+                continue;
 
-        var cloneAudio = audioScriptable.GetClone();
-        foreach (Audio audio in cloneAudio)
-        {
             var source = gameObject.AddComponent<AudioSource>();
-            audio.Initialize(source, isGlobal);
+            triggeredAudio.Initialize(source, isSharedAudio);
 
-            if (!AudioByTrigger.ContainsKey(audio.Trigger))
+            if (triggeredAudio.Trigger == AudioTrigger.Scene_Start)
             {
-                AudioByTrigger.Add(audio.Trigger, audio);
+                triggeredAudio.Play();
+                Destroy(source, triggeredAudio.Clip.length);
+            }
+            else
+            {
+                _audioByTrigger.Add(triggeredAudio.Trigger, triggeredAudio);
             }
         }
     }
 
-    public void Editor_Reload()
-    {
-        // 1. clear out AudioByID
-        Instance.AudioByTrigger = new Dictionary<AudioTrigger, Audio> { };
-
-        // 2. load global audio
-        LoadAudio(Instance.GlobalAudio);
-
-        // 3. load 'thisScene' audio
-        LoadAudio(Instance.ThisSceneAudio);
-    }
-
-
-
-
-
-    private void _onStartSetup()
-    {
-        if (!InstanceExists)
-        {
-            // set this up as the singleton instance
-            Instance = this;
-            _isSingletonInstance = true;
-            transform.SetParent(null);
-            DontDestroyOnLoad(this.gameObject);
-            LoadAudio(GlobalAudio, true);
-
-
-            // this only gets used by the singleton
-            _sceneEndAudioTriggers = new List<AudioTrigger> { };
-        }
-
-
-        // nulls are not an issue
-        Instance.LoadAudio(SceneAudio);
-        Instance.LoadAudio(SceneAudio.ChildAudio);
-        Instance.ThisSceneAudio = SceneAudio;
-
-
-        // play & set up scene start & end audio
-        foreach (var audio in SceneAudio.Audio)
-        {
-            if (_sceneTriggerPlaysOnStart(audio.SceneTrigger))
-            {
-                Instance.PlayTrigger(audio.Trigger);
-            }
-
-            if (_sceneTriggerPlaysOnEnd(audio.SceneTrigger))
-            {
-                Instance._sceneEndAudioTriggers.Add(audio.Trigger);
-            }
-        }
-
-
-        // singleton -- only one gets to exist
-        if (InstanceExists)
-        {
-            Destroy(this);
-        }
-    }
-    private bool _sceneTriggerPlaysOnStart(AudioSceneTrigger trigger)
-    {
-        if (trigger == AudioSceneTrigger.SceneStart)
-        {
-            return true;
-        }
-        else if (trigger == AudioSceneTrigger.SceneStartAndEnd)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    private bool _sceneTriggerPlaysOnEnd(AudioSceneTrigger trigger)
-    {
-        if (trigger == AudioSceneTrigger.SceneEnd)
-        {
-            return true;
-        }
-        else if (trigger == AudioSceneTrigger.SceneStartAndEnd)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-
-
-    private void _onSceneLoad(Scene scene, LoadSceneMode loadMode)
-    {
-        _playSceneEndTriggers();
-        _removeOldSceneAudio();
-    }
-
-
-    private void _playSceneEndTriggers()
-    {
-        PlayTriggers(_sceneEndAudioTriggers);
-        _sceneEndAudioTriggers.Clear();
-    }
-
-
-    private void _removeOldSceneAudio()
+    private void _cleanupAudioDict(Scene _discard1, LoadSceneMode _discard2)
     {
         var newDict = new Dictionary<AudioTrigger, Audio> { };
-
-        foreach (KeyValuePair<AudioTrigger, Audio> pair in AudioByTrigger)
+        foreach (var pair in _audioByTrigger)
         {
-            if (!pair.Value.IsGlobal)
+            if (pair.Value.IsGlobal)
+            {
+                newDict.Add(pair.Value.Trigger, pair.Value);
+            }
+            else
             {
                 pair.Value.Cleanup();
-                continue;
             }
-
-            newDict.Add(pair.Value.Trigger, pair.Value);
         }
 
-        AudioByTrigger = newDict;
+        _audioByTrigger = newDict;
     }
-
-
-
-
 }
