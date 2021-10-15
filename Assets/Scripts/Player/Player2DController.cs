@@ -2,6 +2,7 @@
 
 public class Player2DController : MonoBehaviour
 {
+    // Editor Fields
     [Header("Control")]
     public PlayerControlMode Mode;
     public Vector2 MinRestriction;
@@ -13,75 +14,57 @@ public class Player2DController : MonoBehaviour
     [Range(0,1)]
     public float SlowMoMult;
 
-
-    // used for mouse position
+    // Runtime Fields
     private Camera _mainCam;
 
 
-
-    void Awake()
+    private void Awake()
     {
         _mainCam = Camera.main;
     }
 
-
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            // looks weird, but switches the input mode from keyboard to mouse, or vice versa.
-            Mode = (Mode == PlayerControlMode.Keyboard) 
-                ? PlayerControlMode.Mouse
-                : PlayerControlMode.Keyboard;
+            if (Mode == PlayerControlMode.Keyboard)
+                Mode = PlayerControlMode.Mouse;
+            else
+                Mode = PlayerControlMode.Keyboard;
         }
 
         var localPos = transform.localPosition;
-        bool shiftKeyPressed = Input.GetKey(KeyCode.LeftShift);
-        float mult = MoveSpeed * Time.deltaTime * ((shiftKeyPressed) ? SlowMoMult : 1f);
+        float moveSpeed = MoveSpeed * Time.deltaTime;
+        if (Input.GetKey(KeyCode.LeftShift))
+            moveSpeed *= SlowMoMult;
 
-        if      (Mode == PlayerControlMode.Keyboard) _keyboardMovement(localPos, mult);
-        else if (Mode == PlayerControlMode.Mouse) _mouseControlMovement(localPos, mult);
+        if      (Mode == PlayerControlMode.Keyboard) _keyboardMovement(localPos, moveSpeed);
+        else if (Mode == PlayerControlMode.Mouse) _mouseControlMovement(localPos, moveSpeed);
     }
 
 
-    private void _mouseControlMovement(Vector3 localPos, float mult)
+    private void _mouseControlMovement(Vector3 localPos, float moveSpeed)
     {
         Vector2 mousePos = _mainCam.ScreenToWorldPoint(Input.mousePosition);
+        var movementVector = localPos - (Vector3)mousePos;
 
-
-        // vector for direction trying to go.
-        var heading = localPos - (Vector3)mousePos;
-
-
-
-        // mult is the max distance travellable this frame
         Vector3 desiredPos;
-        if (heading.magnitude <= mult)
-        {
+        if (movementVector.magnitude <= moveSpeed)
             desiredPos = mousePos;
-        }
         else
-        {
-            var headingNorm = heading.normalized;
-
-            headingNorm *= mult;
-
-            desiredPos = localPos + headingNorm;
-        }
-
+            desiredPos = localPos + (movementVector.normalized * moveSpeed);
 
         transform.localPosition = _restrictPlayerPosition(desiredPos);
     }
 
-    private void _keyboardMovement(Vector3 localPos, float mult)
+    private void _keyboardMovement(Vector3 localPos, float moveSpeed)
     {
         //float horiz = Input.GetAxisRaw("Horizontal");
         //float vert = Input.GetAxisRaw("Vertical");
         float horiz = Input.GetAxis("Horizontal");
         float vert = Input.GetAxis("Vertical");
 
-        localPos += (new Vector3(horiz, vert) * mult);
+        localPos += new Vector3(horiz, vert) * moveSpeed;
 
         transform.localPosition = _restrictPlayerPosition(localPos);
     }
@@ -95,7 +78,4 @@ public class Player2DController : MonoBehaviour
 
         return ret;
     }
-
-
-
 }

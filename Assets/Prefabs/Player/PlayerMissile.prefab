@@ -45,6 +45,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -129,11 +131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052b1300303f9204c8fb84eb1b4f0012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  Params:
-    TurnRate: 0
-    SpeedRampPeriod: 0
-    SpeedRampEndMult: 0
 --- !u!114 &3850677843696653494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c39c3e5ec891784fa51fab3837fb04d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Params:
+  MissileParams:
     TurnRate: 0
     SpeedRampPeriod: 0
     SpeedRampEndMult: 0
@@ -163,8 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Team: 1
-  Damage: 0
-  Speed: 0
+  ImpactAudio: 6
 --- !u!114 &6309264265038603787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,8 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1b78fd2d45e764fa0f39fe33da671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
-  ID: 0
+  Type: 1
 --- !u!61 &8846971258212944771
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -251,6 +246,8 @@ TrailRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

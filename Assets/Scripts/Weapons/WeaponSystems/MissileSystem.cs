@@ -1,38 +1,24 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MissileSystem : WeaponSystem
 {
+    // Editor Fields
     public MissileParams MissileParams;
 
 
-    void Awake() => base.OnAwake();
-    void Update() => base.OnUpdate();
-
-
-
-    public MissileSystemParams GetParams()
-    {
-        return new MissileSystemParams(Params, MissileParams.Clone());
-    }
-
-    public void LoadParams(MissileSystemParams missileSysParams, IEnumerable<Mod> mods)
-    {
-        base.LoadParams(missileSysParams);
-        MissileParams = missileSysParams.MissileParams;
-    }
-
-
+    private void Awake() => base.OnAwake();
+    private void FixedUpdate() => base.OnFixedUpdate();
 
     public override void PostInstantiation(GameObject missile)
     {
         var missileComponent = missile.GetComponent<HomingMissile>();
-        missileComponent.Params = MissileParams;
-        missileComponent.Target = EntityManager.Instance.GetRandom(EntityType.Enemy)?.transform;
+        missileComponent.Initialize(
+            EntityManager.Instance.GetRandom(EntityType.Enemy)?.transform,
+            MissileParams
+        );
 
         var rampComponent = missile.GetComponent<HomingMissileSpeedRamp>();
-        rampComponent.Params = MissileParams;
-
+        rampComponent.MissileParams = MissileParams;
 
         AudioManager.Instance.PlayTrigger(AudioTrigger.Missile_Fire);
     }

@@ -10,7 +10,7 @@ public class ScrollingBackground : MonoBehaviour
     [Header("Background")]
     public Transform[] Backgrounds;
 
-    // UX uses Update
+
     private void Update()
     {
         var delta = Time.deltaTime;

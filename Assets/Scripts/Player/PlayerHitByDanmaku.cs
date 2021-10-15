@@ -1,39 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using DanmakU;
-
 
 [RequireComponent(typeof(DanmakuCollider))]
 public class PlayerHitByDanmaku : MonoBehaviour
 {
-    // needs a reference to player data of some kind to tell it that damage was taken.
-
+    // Editor Fields
     public Player Player;
     public DanmakuCollider DanmakuCollider;
 
-    void Awake()
+    private void Awake()
     {
-        DanmakuCollider = GetComponent<DanmakuCollider>();
         DanmakuCollider.OnDanmakuCollision += _onDanmakuCollision;
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        // do i even need to worry about this?
         DanmakuCollider.OnDanmakuCollision -= _onDanmakuCollision;
     }
 
-
-    void _onDanmakuCollision(DanmakuCollisionList list)
+    private void _onDanmakuCollision(DanmakuCollisionList list)
     {
         // send damage to player reference.
         Player.TakeDamage(1);
 
         // grant a period of invulnerability afterwards.
-        
+        // Disable collider temporarily?
 
-        // for now, just destroy them
+        // Destroy the Danmaku in questioon
         for (int i = 0; i < list.Count; i++)
         {
             list[i].Danmaku.Destroy();

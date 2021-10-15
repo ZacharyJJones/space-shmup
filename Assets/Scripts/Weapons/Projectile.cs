@@ -1,41 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    // Editor Fields
     public Team Team;
-    public int Damage;
-    public float Speed;
+    public AudioTrigger ImpactAudio;
+
+    // Runtime Fields
+    public int Damage { get; set; }
+    public float Speed { get; set; }
 
 
-    void FixedUpdate()
+    public void Initialize(int damage, float speed)
+    {
+        Damage = damage;
+        Speed = speed;
+    }
+
+    private void FixedUpdate()
     {
         transform.Translate(transform.right * Speed * Time.deltaTime);
     }
 
-    void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
         var damageable = collider.gameObject.GetComponent<IDamageable>();
         if (damageable == null || damageable.Team == Team)
-        {
             return;
-        }
-
 
         damageable.TakeDamage(Damage);
+        AudioManager.Instance.PlayTrigger(ImpactAudio);
 
-        AudioManager.Instance.PlayTrigger(AudioTrigger.Laser_Impact);
-
-        // destroy bullet
         var entityComponent = GetComponent<Entity>();
         if (entityComponent != null)
         {
             entityComponent.RemoveSelf();
         }
-
         Destroy(gameObject);
     }
 }
-
-

@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class SpeedRamp : MonoBehaviour
 {
+    // Editor Fields
     public float SpeedEndFraction;
     public float SpeedChangePeriod;
 
+    // Runtime Fields
     private float _time;
     private Projectile _projectile;
 
-    // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         if (_projectile == null)
         {
@@ -19,9 +20,8 @@ public class SpeedRamp : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        // Increase speed of projectile?
     }
 }

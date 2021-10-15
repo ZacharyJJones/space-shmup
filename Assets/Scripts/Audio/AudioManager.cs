@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,7 +17,8 @@ public class AudioManager : MonoBehaviour
     private Dictionary<AudioTrigger, Audio> _audioByTrigger { get; set; }
 
 
-    private void Awake()
+    // Cannot be Awake, as that occurs before the OnSceneLoad trigger.
+    private void Start()
     {
         // First-Instance Setup
         if (Instance == null)
@@ -58,7 +60,7 @@ public class AudioManager : MonoBehaviour
         _audioByTrigger[trigger].Play();
     }
 
-    private void _loadAudio(IEnumerable<Audio> audios, bool isSharedAudio = false)
+    private void _loadAudio(IEnumerable<Audio> audios, bool isGlobalAudio = false)
     {
         foreach (var triggeredAudio in audios)
         {
@@ -66,7 +68,7 @@ public class AudioManager : MonoBehaviour
                 continue;
 
             var source = gameObject.AddComponent<AudioSource>();
-            triggeredAudio.Initialize(source, isSharedAudio);
+            triggeredAudio.Initialize(source, isGlobalAudio);
 
             if (triggeredAudio.Trigger == AudioTrigger.Scene_Start)
             {

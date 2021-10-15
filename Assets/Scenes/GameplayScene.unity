@@ -996,18 +996,6 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
---- !u!114 &1286219122 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8251211153376961026, guid: cad259a9bc55e3f4bb2c3d4570b612d8,
-    type: 3}
-  m_PrefabInstance: {fileID: 326444735}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ee3023bdacc1642b8ace60b339d869, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1404691938
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,7 +1111,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1726817770}
-  - component: {fileID: 1726817772}
   - component: {fileID: 1726817771}
   m_Layer: 0
   m_Name: GameData
@@ -1158,43 +1145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfca3e9c0b3504d439877d0f99cee91b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mods: {fileID: 11400000, guid: 7ae7245a84879da4d916bafadc343d9f, type: 2}
   WaveNumber: 0
   EnemiesKilledThisWave: 0
-  Mods: {fileID: 11400000, guid: 7ae7245a84879da4d916bafadc343d9f, type: 2}
---- !u!114 &1726817772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1726817769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3b0b4b02fecfee48a8fc7cb80d76d2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 1286219122}
-  BaseMaxHealth: 0
-  BaseMoveSpeed: 0
-  BaseLaserSystemParams:
-    Damage: 0
-    Speed: 0
-    CanFire: 0
-    DelayPerVolley: 0
-    ShotsPerVolleyFired: 0
-    ShotDelayInVolley: 0
-    InaccuracyInDegrees: 0
-  BaseMissileSystemParams:
-    Damage: 0
-    Speed: 0
-    CanFire: 0
-    DelayPerVolley: 0
-    ShotsPerVolleyFired: 0
-    ShotDelayInVolley: 0
-    MissileParams:
-      TurnRate: 0
-      SpeedRampPeriod: 0
-      SpeedRampEndMult: 0
 --- !u!1 &1757451887
 GameObject:
   m_ObjectHideFlags: 0

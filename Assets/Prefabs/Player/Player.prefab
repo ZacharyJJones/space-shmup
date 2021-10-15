@@ -45,6 +45,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -282,6 +284,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -393,6 +397,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -507,6 +513,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -588,6 +596,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -702,8 +712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1b78fd2d45e764fa0f39fe33da671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  ID: 0
+  Type: 3
 --- !u!114 &8251211153376961038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -785,10 +794,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ee3023bdacc1642b8ace60b339d869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHealth: 3
   LaserSystem: {fileID: 8251211154318424771}
   MissileSystem: {fileID: 6528111186112793352}
   Player2DController: {fileID: 8251211153376961037}
-  MaxHealth: 3
 --- !u!1 &8251211153985006228
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,6 +843,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -915,6 +926,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1036,9 +1049,9 @@ MonoBehaviour:
     Damage: 1
     Speed: 5
     CanFire: 1
-    DelayPerVolley: 0.5
-    ShotsPerVolleyFired: 1
-    ShotDelayInVolley: 0
+    DelayPerVolley: 2
+    ShotsPerVolleyFired: 3
+    ShotDelayInVolley: 0.5
   InaccuracyInDegrees: 5
 --- !u!1 &8291830760646096067
 GameObject:
@@ -1087,6 +1100,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

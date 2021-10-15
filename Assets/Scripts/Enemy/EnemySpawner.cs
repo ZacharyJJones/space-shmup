@@ -15,6 +15,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // temporary
+        return;
+
         // Note: Consider for future, whether spawning should be enabled / disabled based on this script's
         // ... existence or enable/disable state itself. No need for this check EVERY FRAME then.
         if (!SpawningEnabled)

@@ -1,50 +1,35 @@
-﻿using DanmakU;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class HomingMissile : MonoBehaviour
 {
+    // these should be editor fields?
     public const float MISSILE_WIGGLE_FRACTION = 0.3f;
     public const float MISSILE_WIGGLE_PERIOD = 2f;
 
-
-
-    public Transform Target;
-
-    [HideInInspector]
-    public MissileParams Params;
-
-
-    // hidden stuff
+    // Runtime Fields
+    private Transform _target;
+    private MissileParams _missileParams;
     private float _time;
 
 
-
-    void Start()
+    public void Initialize(Transform target, MissileParams missileParams)
     {
         _time = UnityEngine.Random.Range(0f, MISSILE_WIGGLE_PERIOD);
+        _target = target;
+        _missileParams = missileParams;
     }
 
-
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        _setRotation();
+        if (_target)
+            _rotateToTarget();
     }
 
-
-    private void _setRotation()
+    private void _rotateToTarget()
     {
-        if (Target == null)
-        {
-            return;
-        }
-
-        float delta = Time.deltaTime;
-
-        Vector2 diff = (Target.position - transform.position);
-        float degreesRotatableThisFrame = Params.TurnRate * delta;
+        Vector2 diff = (_target.position - transform.position);
+        float degreesRotatableThisFrame = _missileParams.TurnRate * Time.deltaTime;
 
         var unitCircle = diff.normalized;
 
@@ -61,25 +46,24 @@ public class HomingMissile : MonoBehaviour
         // figure out the degrees value for X
         headingToTarget += Mathf.Asin(unitCircle.x) * Mathf.Rad2Deg;
 
-
         // add wiggle amount to final rotation.
-        _time += delta;
+        _time += Time.deltaTime;
         if (_time > MISSILE_WIGGLE_PERIOD)
             _time -= MISSILE_WIGGLE_PERIOD;
 
         float sineT = (_time / MISSILE_WIGGLE_PERIOD);
-        float wiggleMagnitude = Sine(sineT, 0, 1, 0);
-        float totalWiggle = wiggleMagnitude * MISSILE_WIGGLE_FRACTION * Params.TurnRate;
-
-
-        headingToTarget += totalWiggle;
+        float wiggleMagnitude = _sine(sineT, 0, 1, 0);
+        float totalWiggle = wiggleMagnitude * MISSILE_WIGGLE_FRACTION * _missileParams.TurnRate;
 
         // unsure of why headingToTarget needs to be inverted here, but it IS necessary.
-        var desiredRotation = Quaternion.Euler(0, 0, -headingToTarget);
+        headingToTarget = (headingToTarget + totalWiggle) * -1;
 
-
-        var newRotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, degreesRotatableThisFrame).normalized;
-
+        var desiredRotation = Quaternion.Euler(0, 0, headingToTarget);
+        var newRotation = Quaternion.RotateTowards(
+            transform.rotation,
+            desiredRotation,
+            degreesRotatableThisFrame
+        ).normalized;
 
         transform.rotation = newRotation;
     }
@@ -89,10 +73,10 @@ public class HomingMissile : MonoBehaviour
     /// <param name="xOffset"> X offset for sine wave. </param>
     /// <param name="magnitude"> The most extreme y-value deviation from the midline that this function will return. </param>
     /// <param name="midline"> The 'y-value' for the center between the peaks and troughs of the wave. </param>
-    public static float Sine(float t, float xOffset = 0, float magnitude = 0.5f, float midline = 0.5f)
+    private static float _sine(float t, float xOffset = 0, float magnitude = 0.5f, float midline = 0.5f)
     {
         // 'sine' produces the result of Math.Sin, which (by default) is normalized to the 0-1 domain/range.
-        // https://www.desmos.com/calculator/xp5uwiwywl
+        // https://www.desmos.com/calculator/ihbotnw2xr
 
         // magnitude 0.5, center @ y=0.5, period = 1
         /* sample values:
@@ -107,8 +91,7 @@ public class HomingMissile : MonoBehaviour
         double ret = (Math.Sin(TWO_PI * (t + xOffset)) * magnitude) + midline;
         return (float)ret;
     }
-    public const double TWO_PI = Math.PI * 2.0;
 
-
+    private const double TWO_PI = Math.PI * 2.0;
 
 }

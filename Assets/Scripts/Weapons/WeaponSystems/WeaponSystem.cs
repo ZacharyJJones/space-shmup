@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 [System.Serializable]
@@ -11,22 +9,14 @@ public class FireGroup
 
 public class WeaponSystem : MonoBehaviour
 {
-    [Header("Projectile")]
+    // Editor Fields
     public GameObject ProjectilePrefab;
-
-    [Header("Fire Groups")]
     public FireGroup[] FireGroups;
-
-    [Header("Params")]
     public WeaponSystemParams Params;
 
-
-
+    // Runtime Fields
     private float _time;
     private int[] _fireLocsTracking;
-
-
-
 
 
     public virtual void OnAwake()
@@ -34,12 +24,10 @@ public class WeaponSystem : MonoBehaviour
         _fireLocsTracking = new int[FireGroups.Length];
     }
 
-    public virtual void OnUpdate()
+    public virtual void OnFixedUpdate()
     {
         if (!Params.CanFire)
-        {
             return;
-        }
 
         _time += Time.deltaTime;
         if (_time >= Params.DelayPerVolley)
@@ -55,25 +43,17 @@ public class WeaponSystem : MonoBehaviour
     }
 
 
-    public void LoadParams(WeaponSystemParams weaponSystemParams)
+    private IEnumerator _fireVolley()
     {
-        Params = weaponSystemParams;
-    }
-
-
-
-    IEnumerator _fireVolley()
-    { 
         float shotDelayTimer = Params.ShotDelayInVolley;
         for (int shotsFired = 0; shotsFired < Params.ShotsPerVolleyFired; shotsFired++)
         {
-            // wait to fire the next shot in the volley until enough time has passed.
             while (shotDelayTimer < Params.ShotDelayInVolley)
             {
                 shotDelayTimer += Time.deltaTime;
                 yield return null;
             }
-
+            shotDelayTimer -= Params.ShotDelayInVolley;
 
             // iterate through weapon groups, firing at next location to be used in that group.
             for (int i = 0; i < FireGroups.Length; i++)
@@ -90,18 +70,10 @@ public class WeaponSystem : MonoBehaviour
 
                 // set up projectile stuff
                 var projComponent = projectile.GetComponent<Projectile>();
-                projComponent.Damage = Params.Damage;
-                projComponent.Speed = Params.Speed;
+                projComponent.Initialize(Params.Damage, Params.Speed);
 
                 PostInstantiation(projectile);
             }
-
-
-            // ensure timer gets reduced, as the shot WAS fired.
-            shotDelayTimer -= Params.ShotDelayInVolley;
         }
     }
-
-
-
 }

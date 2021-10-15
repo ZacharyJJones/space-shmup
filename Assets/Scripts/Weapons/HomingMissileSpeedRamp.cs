@@ -4,28 +4,27 @@ using UnityEngine;
 
 public class HomingMissileSpeedRamp : MonoBehaviour
 {
-    public MissileParams Params;
+    // Editor Fields
+    public MissileParams MissileParams;
 
-
+    // Runtime Fields
     private Projectile _projectile;
     private float _maxSpeed;
     private float _startSpeed;
     private float _time;
 
 
-    // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         _projectile = GetComponent<Projectile>();
         _startSpeed = _projectile.Speed;
-        _maxSpeed = _startSpeed * Params.SpeedRampEndMult;
+        _maxSpeed = _startSpeed * MissileParams.SpeedRampEndMult;
         _time = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        if (_time >= Params.SpeedRampPeriod)
+        if (_time >= MissileParams.SpeedRampPeriod)
         {
             _projectile.Speed = _maxSpeed;
             Destroy(this);
@@ -33,8 +32,7 @@ public class HomingMissileSpeedRamp : MonoBehaviour
         }
 
         _time += Time.deltaTime;
-        float interp = _time / Params.SpeedRampPeriod;
-
-        _projectile.Speed = Mathf.Lerp(_startSpeed, _maxSpeed, interp);        
+        float interp = _time / MissileParams.SpeedRampPeriod;
+        _projectile.Speed = Mathf.Lerp(_startSpeed, _maxSpeed, interp);
     }
 }
