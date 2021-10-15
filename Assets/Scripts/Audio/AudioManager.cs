@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour
     private Dictionary<AudioTrigger, Audio> _audioByTrigger { get; set; }
 
 
-    private void Start()
+    private void Awake()
     {
         // First-Instance Setup
         if (Instance == null)

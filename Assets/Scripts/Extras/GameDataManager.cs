@@ -5,41 +5,40 @@ using UnityEngine;
 
 public class GameDataManager : MonoBehaviour
 {
-    // Singleton Pattern stuff
     public static GameDataManager Instance;
-    public static bool InstanceExists => (Instance != null);
 
-
-
-
-
-    // this gets assigned by the chooser itself.
-   // [HideInInspector] public GameModChooser GameModChooser;
-
-
-    public int WaveNumber;
-    public int EnemiesKilledThisWave;
-   // public LevelWavesData WavesData; // this will be calculated later on based on the upgrades posessed by the enemies
-   // public LevelWave CurrentWave; // see above
-
-    // when generating wave data, create a set of data pre-calculating the mod effects for each enemy that can spawn.
-    // -- this is to avoid tons of unnecessary calculations by doing it all before the wave starts.
-
+    // Editor Fields
     public AvailableModsScriptable Mods;
 
-    public List<Mod> PlayerMods { get; set; }
-    public List<Mod> EnemyMods { get; set; }
+    // Runtime Fields
+    public int WaveNumber;
+    public int EnemiesKilledThisWave;
+    private List<Mod> PlayerMods;
+    private List<Mod> EnemyMods;
 
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(this);
+            return;
+        }
 
+        Instance = this;
+        transform.SetParent(null);
+        DontDestroyOnLoad(this.gameObject);
 
-
+        PlayerMods = new List<Mod> { };
+        EnemyMods = new List<Mod> { };
+    }
 
     public GameObject GetRandomEnemyFromThisWave()
     {
         return null;
 
-
-
+        // Below code would be to select an enemy to spawn based on certain weights.
+        // --> Probably want to change this, it would be cool to have groups/formations/patterns of enemies that spawn
+        // ... rather than singular dudes. But that's a problem for another day.
 
         /* from enemyspawner.cs */
 
@@ -73,36 +72,6 @@ public class GameDataManager : MonoBehaviour
         //return chosenEnemy;
     }
 
-
-
-
-    void Awake()
-    {
-        if (InstanceExists)
-        {
-            Destroy(this);
-            return;
-        }
-
-
-        Instance = this;
-        transform.SetParent(null);
-        DontDestroyOnLoad(this.gameObject);
-
-        PlayerMods = new List<Mod> { };
-        EnemyMods = new List<Mod> { };
-    }
-
-
-
-
-    public void UpdatePlayerStats()
-    {
-        // apply player mods
-    }
-
-
-
     public void RegisterEnemyDeath(Enemy enemy)
     {
         EnemiesKilledThisWave++;
@@ -111,23 +80,5 @@ public class GameDataManager : MonoBehaviour
             // stop spawning enemies / make sure they all disappear / move them offscreen
             // spawn upgrade options (bouncing text on screen: COLLECT AN UPGRADE)
         }
-    }
-
-    /// <summary> Spawns the upgrade objects for the player to collect by flying into. </summary>
-    public void SpawnUpgrades()
-    {
-
-    }
-
-    public void ProgressToNextWave()
-    {
-        // assuming this gets called after having collected the upgrade
-        // -- re-create the data for 'this wave' based on upgrades etc.
-
-
-        // load next wave's data
-        // set enemies to spawn again
-        // reset enemies killed counter
-        // make sure mod selection UI is hidden.
     }
 }

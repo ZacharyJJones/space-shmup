@@ -2,6 +2,7 @@
 
 public class ScrollingBackground : MonoBehaviour
 {
+    // Editor Variables
     [Header("Size & Speed")]
     public float Size = 9f;
     public float Speed = 1f;
@@ -9,10 +10,8 @@ public class ScrollingBackground : MonoBehaviour
     [Header("Background")]
     public Transform[] Backgrounds;
 
-
-
-    // Update is called once per frame
-    void Update()
+    // UX uses Update
+    private void Update()
     {
         var delta = Time.deltaTime;
 

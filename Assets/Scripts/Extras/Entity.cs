@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 
-/// <summary> Class for allowing entities to be trackable via EntityManager. </summary>
+/// <summary> Class for allowing entities to be tracked via EntityManager. </summary>
 public class Entity : MonoBehaviour
 {
+    // Editor Fields
     public EntityType Type;
 
-    // hidden because it does not matter what you set it as here. It gets overridden when added to entity manager.
-    [HideInInspector]
-    public int ID;
+    // Runtime Fields
+    public int ID { get; set; }
 
 
-    void Start()
+    private void Start()
     {
-        EntityManager.Instance?.Add(this, Type);
+        if (!EntityManager.Instance)
+            return;
+
+        EntityManager.Instance.AddEntity(this, Type);
         transform.SetParent(EntityManager.Instance.transform, true);
     }
 
     /// <summary> Removes this entity from being tracked by the entity manager, so it may be destroyed safely. </summary>
-    public void RemoveSelf() => EntityManager.Instance.Remove(Type, ID);
+    public void RemoveSelf() => EntityManager.Instance.RemoveEntity(Type, ID);
 }

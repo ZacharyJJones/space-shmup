@@ -1,43 +1,47 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EntityManager : MonoBehaviour
 {
-    // Singleton Pattern props
+    // Editor Fields
     public static EntityManager Instance;
-    public static bool InstanceExists => (Instance != null);
-    
-
-    // vars
     public Bounds ActiveZone;
-    public Dictionary<EntityType, List<EntityManagerItem>> Entities;
+
+    // Runtime Fields
+    private Dictionary<EntityType, List<EntityManagerItem>> Entities;
     private Dictionary<EntityType, int> _nextIDToGenerateByEntityType;
 
-
-    // props
     public GameObject ActivePlayerEntity => GetRandom(EntityType.Player);
 
 
-    // methods
-    void Awake()
+    private void Awake()
     {
-        if (InstanceExists)
+        if (Instance != null)
         {
             Destroy(this);
             return;
         }
 
-        Entities = new Dictionary<EntityType, List<EntityManagerItem>> { };
-        _nextIDToGenerateByEntityType = new Dictionary<EntityType, int> { };
         Instance = this;
+
+        EntityType[] entityTypeValues = Enum.GetValues(typeof(EntityType))
+            .Cast<EntityType>().Except(new[] {EntityType.Undefined}).ToArray();
+
+        Entities = entityTypeValues.ToDictionary(
+            x => x,
+            x => new List<EntityManagerItem>()
+        );
+        _nextIDToGenerateByEntityType = entityTypeValues.ToDictionary(
+            x => x,
+            x => 0
+        );
     }
 
-
-    void Update()
+    private void FixedUpdate()
     {
-        // might be nice to not run this every frame.
         _entitiesCleanup();
     }
 
@@ -46,7 +50,6 @@ public class EntityManager : MonoBehaviour
         var keys = Entities.Keys;
         foreach (EntityType key in keys)
         {
-            // going backwards through list for simpler removal
             var list = Entities[key];
             for (int i = list.Count - 1; i >= 0; i--)
             {
@@ -55,74 +58,37 @@ public class EntityManager : MonoBehaviour
                     continue;
                 }
 
-                // should not interfere with list, as the gameobject being destroyed is just a property of the list item
                 Destroy(list[i].GameObject);
                 Entities[key].RemoveAt(i);
             }
         }
     }
 
-
     public GameObject GetRandom(EntityType type)
     {
-        if (Entities.TryGetValue(type, out var data) && data.Count > 0)
-        {
-            int i = Random.Range(0, data.Count);
-            return data[i].GameObject;
-        }
-        else
-        {
+        if (!Entities.TryGetValue(type, out var data) || data.Count <= 0)
             return null;
-        }
+
+        int i = Random.Range(0, data.Count);
+        return data[i].GameObject;
     }
 
-
-    public void Add(Entity entity, EntityType type)
+    public void AddEntity(Entity entity, EntityType type)
     {
-        // generate id for entity
-        if (!_nextIDToGenerateByEntityType.ContainsKey(type))
-        {
-            _nextIDToGenerateByEntityType.Add(type, 0);
-        }
+        if (!Entities.ContainsKey(type))
+            return;
 
         entity.ID = _nextIDToGenerateByEntityType[type];
-        _nextIDToGenerateByEntityType[type]++;
-
-
-        if (!Entities.ContainsKey(type))
-        {
-            Entities.Add(type, new List<EntityManagerItem> { });
-        }
-            
-
         Entities[type].Add(new EntityManagerItem(entity.ID, entity.gameObject));
+        _nextIDToGenerateByEntityType[type] += 1;
     }
 
-    public void Remove(EntityType type, int id)
+    public void RemoveEntity(EntityType type, int id)
     {
         if (!Entities.TryGetValue(type, out var list))
-        {
             return;
-        }
 
         int index = list.FindIndex(x => x.ID == id);
         list.RemoveAt(index);
     }
-}
-
-[System.Serializable]
-public struct EntityManagerItem : System.IEquatable<EntityManagerItem>
-{
-    public int ID;
-    public GameObject GameObject;
-
-
-    public EntityManagerItem(int id, GameObject gameObject)
-    {
-        ID = id;
-        GameObject = gameObject;
-    }
-    
-
-    public bool Equals(EntityManagerItem other) => (ID == other.ID);
 }

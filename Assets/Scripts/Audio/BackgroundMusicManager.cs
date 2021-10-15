@@ -15,7 +15,7 @@ public class BackgroundMusicManager : MonoBehaviour
     private AudioSource _songMusicSource;
 
 
-    private void Start()
+    private void Awake()
     {
         if (Instance == null)
         {

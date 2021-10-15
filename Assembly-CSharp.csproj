@@ -91,6 +91,8 @@
      <Compile Include="Assets\Scripts\Weapons\Params\WeaponSystemParams.cs" />
      <Compile Include="Assets\Scripts\Weapons\Projectile.cs" />
      <Compile Include="Assets\Scripts\Weapons\Enums.cs" />
+     <Compile Include="Assets\Scripts\Danmaku\Objects\DanmakuPrefabInfo.cs" />
+     <Compile Include="Assets\Scripts\Extras\Objects\EntityManagerItem.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

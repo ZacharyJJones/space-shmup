@@ -1,58 +1,41 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using DanmakU;
 using System.Linq;
 
 public class DanmakuPrefabManager : MonoBehaviour
 {
-    // singleton pattern
-    public static DanmakuPrefabManager Instance;
-    public static bool InstanceExists => (Instance != null);
-
-
-
-
+    // Editor Fields
+    // This should probably be moved out to a scriptable object, so the list will be shared between any danmaku prefab managers.
     public DanmakuPrefabInfo[] Prefabs;
 
-
+    // Runtime Fields
+    public static DanmakuPrefabManager Instance;
     private Dictionary<string, DanmakuPrefab> _prefabDict;
 
 
-    void Awake()
+    private void Awake()
     {
-        if (InstanceExists)
+        if (Instance != null)
         {
             Destroy(this);
             return;
         }
 
+        // set up as singleton
         Instance = this;
-        _prefabDict = Prefabs.ToDictionary(x => x.Name, x => x.Prefab);
-    }
+        transform.SetParent(null);
+        DontDestroyOnLoad(this.gameObject);
 
-    void OnDestroy()
-    {
-        // this is only true when this is the instance
-        if (_prefabDict != null)
-        {
-            Instance = null;
-        }
+        Instance = this;
+        _prefabDict = Prefabs.ToDictionary(
+            x => x.Name,
+            x => x.Prefab
+        );
     }
 
     public DanmakuPrefab GetPrefab(string name)
     {
-        _prefabDict.TryGetValue(name, out var prefab);
-        return prefab;
+        return _prefabDict[name];
     }
-
-
-    [Serializable]
-    public struct DanmakuPrefabInfo
-    {
-        public string Name;
-        public DanmakuPrefab Prefab;
-    }
-
 }
