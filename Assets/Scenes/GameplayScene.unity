@@ -204,7 +204,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -40}
   m_SizeDelta: {x: 300, y: 40}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &161344926
@@ -497,7 +497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &509113379
 Transform:
   m_ObjectHideFlags: 0
@@ -506,7 +506,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509113378}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24, y: 0, z: 0}
+  m_LocalPosition: {x: 23.95, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1076438889}
@@ -932,7 +932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SongNameDisplay: {fileID: 943303716}
   NotificationPanel: {fileID: 161344925}
-  PanelVisiblePosition: {x: 0, y: 40, z: 0}
+  PanelVisiblePosition: {x: 0, y: 20, z: 0}
   LerpTime: 0.5
   VisibleDuration: 2
 --- !u!850595691 &1211737330
@@ -1164,7 +1164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1757451888
 Transform:
   m_ObjectHideFlags: 0

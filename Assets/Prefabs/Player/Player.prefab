@@ -130,6 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProjectilePrefab: {fileID: 6309264265038603776, guid: 04c5ffae640ecc54c9014cd6383a63df,
     type: 3}
+  FiringSound: 5
   FireGroups:
   - FireLocations:
     - {fileID: 7851763353369333026}
@@ -139,14 +140,13 @@ MonoBehaviour:
   Params:
     Damage: 2
     Speed: 3
+    InaccuracyInDegrees: 0
     CanFire: 1
-    DelayPerVolley: 2
+    DelayPerVolley: 6
     ShotsPerVolleyFired: 4
-    ShotDelayInVolley: 0.25
+    ShotDelayInVolley: 0.33
   MissileParams:
     TurnRate: 60
-    SpeedRampPeriod: 1
-    SpeedRampEndMult: 2
 --- !u!1 &3085143837701186687
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,6 +1040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProjectilePrefab: {fileID: 6882916464959500167, guid: e82104a095f39de49b7e99b7af9eea4e,
     type: 3}
+  FiringSound: 2
   FireGroups:
   - FireLocations:
     - {fileID: 8251211153294763391}
@@ -1047,11 +1048,12 @@ MonoBehaviour:
     - {fileID: 8251211154236889672}
   Params:
     Damage: 1
-    Speed: 5
+    Speed: 10
+    InaccuracyInDegrees: 0
     CanFire: 1
     DelayPerVolley: 2
-    ShotsPerVolleyFired: 3
-    ShotDelayInVolley: 0.5
+    ShotsPerVolleyFired: 4
+    ShotDelayInVolley: 0.25
   InaccuracyInDegrees: 5
 --- !u!1 &8291830760646096067
 GameObject:

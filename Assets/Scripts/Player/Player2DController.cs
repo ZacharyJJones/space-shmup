@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Player2DController : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class Player2DController : MonoBehaviour
         _mainCam = Camera.main;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -32,7 +33,10 @@ public class Player2DController : MonoBehaviour
             else
                 Mode = PlayerControlMode.Keyboard;
         }
+    }
 
+    private void FixedUpdate()
+    {
         var localPos = transform.localPosition;
         float moveSpeed = MoveSpeed * Time.deltaTime;
         if (Input.GetKey(KeyCode.LeftShift))
@@ -52,7 +56,7 @@ public class Player2DController : MonoBehaviour
         if (movementVector.magnitude <= moveSpeed)
             desiredPos = mousePos;
         else
-            desiredPos = localPos + (movementVector.normalized * moveSpeed);
+            desiredPos = localPos - (movementVector.normalized * moveSpeed);
 
         transform.localPosition = _restrictPlayerPosition(desiredPos);
     }

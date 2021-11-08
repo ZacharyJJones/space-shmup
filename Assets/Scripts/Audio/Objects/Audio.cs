@@ -16,7 +16,7 @@ public class Audio
     public bool IsGlobal { get; set; }
     public AudioSource Source { get; set; }
 
-
+    
     public void Play() => Source.Play();
     public void Stop() => Source.Stop();
 

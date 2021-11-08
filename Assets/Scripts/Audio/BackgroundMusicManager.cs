@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class BackgroundMusicManager : MonoBehaviour
@@ -26,9 +27,6 @@ public class BackgroundMusicManager : MonoBehaviour
             // set up audio sources to play audio from
             _loopMusicSource = gameObject.AddComponent<AudioSource>();
             _songMusicSource = gameObject.AddComponent<AudioSource>();
-
-            // start off with a looping track.
-            StartCoroutine(_scheduleMusicToPlay(0f));
         }
         else
         {
@@ -36,6 +34,12 @@ public class BackgroundMusicManager : MonoBehaviour
             Instance.NowPlayingNotifier = this.NowPlayingNotifier;
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        // start off with a looping track.
+        StartCoroutine(_scheduleMusicToPlay(0f));
     }
 
     private IEnumerator _scheduleMusicToPlay(float timeUntilStart)
@@ -46,15 +50,15 @@ public class BackgroundMusicManager : MonoBehaviour
             yield return null;
         }
 
-        var clip = BackgroundMusic.GetRandomNoRepeat(BackgroundMusicType.Song);
-        float timeOfTrack = _playTrack(_songMusicSource, clip);
+        BackgroundMusic music = BackgroundMusic.GetRandomNoRepeat(BackgroundMusicType.Song);
+        float timeOfTrack = _playTrack(_songMusicSource, music);
         StartCoroutine(_scheduleMusicToPlay(timeOfTrack));
     }
 
-    private float _playTrack(AudioSource source, AudioClip clip)
+    private float _playTrack(AudioSource source, BackgroundMusic music)
     {
-        NowPlayingNotifier.NotifyPlayingSong(clip.name);
-        source.PlayOneShot(clip, MusicVolume);
-        return clip.length;
+        NowPlayingNotifier.NotifyPlayingSong(music.TrackName);
+        source.PlayOneShot(music.Clip, MusicVolume);
+        return music.Clip.length;
     }
 }

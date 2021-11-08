@@ -1,16 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[System.Serializable]
-public class FireGroup
-{
-    public Transform[] FireLocations;
-}
-
 public class WeaponSystem : MonoBehaviour
 {
     // Editor Fields
     public GameObject ProjectilePrefab;
+    public AudioTrigger FiringSound;
     public FireGroup[] FireGroups;
     public WeaponSystemParams Params;
 
@@ -29,19 +24,14 @@ public class WeaponSystem : MonoBehaviour
         if (!Params.CanFire)
             return;
 
-        _time += Time.deltaTime;
+        _time += Time.fixedDeltaTime;
         if (_time >= Params.DelayPerVolley)
         {
             _time = 0f;
             StartCoroutine(_fireVolley());
         }
     }
-
-    public virtual void PostInstantiation(GameObject instantiated)
-    {
-        // does nothing by default
-    }
-
+    
 
     private IEnumerator _fireVolley()
     {
@@ -63,17 +53,29 @@ public class WeaponSystem : MonoBehaviour
                 // increment then constrain value
                 _fireLocsTracking[i]++;
                 _fireLocsTracking[i] %= FireGroups[i].FireLocations.Length;
-
-                var projectile = Instantiate(ProjectilePrefab);
-                projectile.transform.position = spawnPoint.position;
-                projectile.transform.rotation = spawnPoint.rotation;
+                //
+                // var gameObject = Instantiate(
+                //     ProjectilePrefab, 
+                //     spawnPoint.position,
+                //     Quaternion.Euler(0, 0, spawnPoint.rotation.eulerAngles.z),
+                //     null
+                // );
+                var rotation = Quaternion.Lerp(Quaternion.identity, spawnPoint.rotation, 1f);
+                // var gameObject = Instantiate(ProjectilePrefab, spawnPoint.position, Quaternion.identity, null);
+                var gameObject = Instantiate(ProjectilePrefab, spawnPoint.position, rotation, null);
 
                 // set up projectile stuff
-                var projComponent = projectile.GetComponent<Projectile>();
-                projComponent.Initialize(Params.Damage, Params.Speed);
+                var projectile = gameObject.GetComponent<Projectile>();
+                projectile.Initialize(Params.Damage, Params.Speed);
+                AudioManager.Instance.PlayTrigger(FiringSound);
 
                 PostInstantiation(projectile);
             }
         }
+    }
+    
+    public virtual void PostInstantiation(Projectile instantiated)
+    {
+        // empty for children to add functionality if needed
     }
 }

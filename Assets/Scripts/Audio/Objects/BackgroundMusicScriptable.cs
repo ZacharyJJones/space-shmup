@@ -6,13 +6,13 @@ using System.Linq;
 [CreateAssetMenu(fileName = "BackgroundMusic", menuName = "ScriptableObjects/BackgroundMusic")]
 public class BackgroundMusicScriptable : ScriptableObject
 {
-    public AudioClip[] LoopingAudio;
-    public AudioClip[] MusicTracks;
+    public BackgroundMusic[] LoopingAudio;
+    public BackgroundMusic[] MusicTracks;
 
     private int _indexOfLastLoopingAudio = -1;
     private int _indexOfLastMusicTrack = -1;
 
-    public AudioClip GetRandomNoRepeat(BackgroundMusicType type)
+    public BackgroundMusic GetRandomNoRepeat(BackgroundMusicType type)
     {
         if (type == BackgroundMusicType.Loop)
         {
@@ -32,7 +32,7 @@ public class BackgroundMusicScriptable : ScriptableObject
         }
     }
 
-    private (AudioClip, int) _getRandomNoRepeat(AudioClip[] array, int lastSelected)
+    private (BackgroundMusic, int) _getRandomNoRepeat(BackgroundMusic[] array, int lastSelected)
     {
         if (array.Length == 1) return (array[0], 0);
         if (array.Length == 0) return (null, -1);

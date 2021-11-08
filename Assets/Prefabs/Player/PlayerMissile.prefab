@@ -92,9 +92,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6309264265038603791}
   - component: {fileID: 6309264265038603789}
-  - component: {fileID: 3850677843696653494}
-  - component: {fileID: 6309264265038603790}
   - component: {fileID: 6309264265038603787}
+  - component: {fileID: 6309264265038603790}
   - component: {fileID: 8846971258212944771}
   m_Layer: 0
   m_Name: PlayerMissile
@@ -131,7 +130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052b1300303f9204c8fb84eb1b4f0012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3850677843696653494
+  TurnRate: 0
+--- !u!114 &6309264265038603787
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,13 +140,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6309264265038603776}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c39c3e5ec891784fa51fab3837fb04d, type: 3}
+  m_Script: {fileID: 11500000, guid: ab1b78fd2d45e764fa0f39fe33da671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MissileParams:
-    TurnRate: 0
-    SpeedRampPeriod: 0
-    SpeedRampEndMult: 0
+  Type: 1
 --- !u!114 &6309264265038603790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,19 +158,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Team: 1
   ImpactAudio: 6
---- !u!114 &6309264265038603787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6309264265038603776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab1b78fd2d45e764fa0f39fe33da671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 1
 --- !u!61 &8846971258212944771
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -198,7 +182,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.35, y: 0.3}
+  m_Size: {x: 0.35, y: 0.2}
   m_EdgeRadius: 0
 --- !u!1 &6309264265457495653
 GameObject:

@@ -57,7 +57,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlayTrigger(AudioTrigger trigger)
     {
-        _audioByTrigger[trigger].Play();
+        if (trigger != AudioTrigger.Undefined)
+            _audioByTrigger[trigger].Play();
     }
 
     private void _loadAudio(IEnumerable<Audio> audios, bool isGlobalAudio = false)
