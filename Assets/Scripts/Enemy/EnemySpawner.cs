@@ -1,43 +1,48 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     // Editor Fields
     public BoxCollider2D SpawnZone;
-    public float BaseSpawnProgressRate = 25f;
-    public bool SpawningEnabled = true;
+    public float SpawnRate = 25f;
+    public float SpawnThreshold = 100f;
 
     // Runtime Fields
-    // Eventually, _currentSpawnProgressRate could be affected by # of waves, or similar.
-    private float _currentSpawnProgressRate => BaseSpawnProgressRate;
-    private float _spawnProgress = 0;
+    private float _spawnProgress;
 
+    
+    private void Start()
+    {
+        _spawnProgress = 0;
+        GameDataManager.Instance.OnWaveEnd += _onWaveEndEvent;
+        GameDataManager.Instance.OnWaveStart += _onWaveStartEvent;
+    }
+
+    private void _onWaveEndEvent(object sender)
+    {
+        enabled = false;
+    }
+    private void _onWaveStartEvent(object sender)
+    {
+        _spawnProgress = 0;
+        enabled = true;
+    }
 
     private void FixedUpdate()
     {
-        // temporary
-        return;
-
-        // Note: Consider for future, whether spawning should be enabled / disabled based on this script's
-        // ... existence or enable/disable state itself. No need for this check EVERY FRAME then.
-        if (!SpawningEnabled)
-            return;
-
-        _spawnProgress += _currentSpawnProgressRate;
-        while (_spawnProgress >= 100f)
+        _spawnProgress += SpawnRate;
+        while (_spawnProgress >= SpawnThreshold)
         {
             _spawnEnemy();
-            _spawnProgress -= 100f;
+            _spawnProgress -= SpawnThreshold;
         }
     }
 
     private void _spawnEnemy()
     {
         var spawnPos = Utils.GetRandomPointInCollider(SpawnZone);
-
-        var chosenEnemy = GameDataManager.Instance.GetRandomEnemyFromThisWave();
-
-        var obj = Instantiate(chosenEnemy);
-        obj.transform.position = spawnPos;
+        var chosenEnemy = GameDataManager.Instance.GetRandomEnemyFromWave();
+        Instantiate(chosenEnemy, spawnPos, Quaternion.Euler(0, 0, -180));
     }
 }

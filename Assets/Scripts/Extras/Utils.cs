@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System;
+using UnityEngine;
 
 public static class Utils
 {
@@ -8,8 +10,8 @@ public static class Utils
         Vector3 min = bounds.min;
         Vector3 max = bounds.max;
 
-        float x = Random.Range(min.x, max.x);
-        float y = Random.Range(min.y, max.y);
+        float x = UnityEngine.Random.Range(min.x, max.x);
+        float y = UnityEngine.Random.Range(min.y, max.y);
 
         return new Vector3(x, y);
     }
@@ -31,5 +33,26 @@ public static class Utils
         
         const double TWO_PI = System.Math.PI * 2.0;
         return (float)(System.Math.Sin(TWO_PI * (t + xOffset)) * magnitude + midline);
+    }
+    
+    public static IEnumerator SimpleWait(float waitTime, Action onComplete)
+    {
+        for (float time = 0; time < waitTime; time += Time.deltaTime)
+        {
+            yield return null;
+        }
+
+        onComplete.Invoke();
+    }
+    
+    public static IEnumerator DoOverTime(float timeToComplete, Action<float> whileActive, Action onComplete = null)
+    {
+        for (float time = 0; time < timeToComplete; time += Time.deltaTime)
+        {
+            whileActive.Invoke(time / timeToComplete);
+            yield return null;
+        }
+
+        onComplete?.Invoke();
     }
 }

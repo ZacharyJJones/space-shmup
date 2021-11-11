@@ -19,7 +19,6 @@ public class Projectile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //transform.Translate(Speed * Time.deltaTime * transform.right);
         transform.Translate(Speed * Time.deltaTime * Vector3.right);
     }
 

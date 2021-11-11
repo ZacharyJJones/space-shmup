@@ -506,8 +506,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509113378}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.95, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 24, y: 0, z: 0}
+  m_LocalScale: {x: 2.05, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1076438889}
   m_RootOrder: 1
@@ -1060,8 +1060,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnZone: {fileID: 1478319755}
-  BaseSpawnProgressRate: 50
-  SpawningEnabled: 1
+  SpawnRate: 25
+  SpawnThreshold: 100
 --- !u!61 &1478319755
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1146,8 +1146,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mods: {fileID: 11400000, guid: 7ae7245a84879da4d916bafadc343d9f, type: 2}
+  EnemyToSpawn: {fileID: 2971012956097978019, guid: 57f3b75580605d742a57a0ae71dcf723,
+    type: 3}
   WaveNumber: 0
-  EnemiesKilledThisWave: 0
+  EnemiesDefeatedThisWave: 0
+  EnemyDefeatWaveThreshold: 0
 --- !u!1 &1757451887
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,7 +1177,7 @@ Transform:
   m_GameObject: {fileID: 1757451887}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 2.05, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1076438889}
   m_RootOrder: 0

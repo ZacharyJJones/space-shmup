@@ -25,30 +25,21 @@ public class NowPlayingNotifier : MonoBehaviour
 
     public void NotifyPlayingSong(string songName)
     {
-        songName = songName.Replace("Loop", "").Trim();
+        // Formatting
         SongNameDisplay.text = $"<b>{songName}</b>";
 
         // Show Panel right away
         StartCoroutine(_panelLerpCommon(LerpTime, _panelHiddenPosition, PanelVisiblePosition));
-
+            
         // Schedule to Hide Panel
-        StartCoroutine(_simpleWait(LerpTime + VisibleDuration, _hidePanel));
+        StartCoroutine(Utils.SimpleWait(LerpTime + VisibleDuration, _hidePanel));
     }
+    
     private void _hidePanel()
     {
         StartCoroutine(_panelLerpCommon(LerpTime, PanelVisiblePosition, _panelHiddenPosition));
     }
-
-    private IEnumerator _simpleWait(float waitTime, Action onComplete)
-    {
-        for (float time = 0; time < waitTime; time += Time.deltaTime)
-        {
-            yield return null;
-        }
-
-        onComplete.Invoke();
-    }
-
+    
     private IEnumerator _panelLerpCommon(float duration, Vector3 start, Vector3 end)
     {
         for (float time = 0; time < duration; time += Time.deltaTime)

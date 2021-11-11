@@ -12,7 +12,7 @@ public class Player : MonoBehaviour, IDamageable
     public Player2DController Player2DController;
 
     // Runtime Fields
-    private int _currentHealth { get; set; }
+    private int _currentHealth;
 
     public void Awake()
     {
@@ -22,14 +22,12 @@ public class Player : MonoBehaviour, IDamageable
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
-        Debug.Log($"Player took {damage} damage!");
 
         if (_currentHealth < 0)
         {
-            Debug.LogWarning("Player Died!");
             _currentHealth = MaxHealth;
         }
-
+        
         // if dead, do something
     }
 

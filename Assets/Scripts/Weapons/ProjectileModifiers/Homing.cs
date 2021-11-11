@@ -3,39 +3,31 @@ using UnityEngine;
 
 public class Homing : MonoBehaviour, IProjectileModifier
 {
-    // when moving wiggle to own class, these would be editor values.
-    // -- does wiggle really need to be divorced from homing?
-    // -- It seems more like a variation of homing than it's own behavior.
-    public const float MISSILE_WIGGLE_FRACTION = 0.3f;
-    public const float MISSILE_WIGGLE_PERIOD = 2f;
-
+    // Editor Fields
     public float TurnRate;
-    
+    public float WiggleFraction = 0.3f;
+    public float WigglePeriod = 2f;
+
     // Runtime Fields
-    private Projectile _projectile;
     private Transform _target;
     private float _time;
 
-    public void Awake()
+    private void Start()
     {
-        _time = UnityEngine.Random.Range(0f, MISSILE_WIGGLE_PERIOD);
+        _time = UnityEngine.Random.Range(0f, WigglePeriod);
     }
-    
+
     private void FixedUpdate()
     {
         if (_target)
             _rotateToTarget();
     }
-
     
-    public void Initialize(Projectile projectile)
-    {
-        _projectile = projectile;
-    }
-
+    public void Initialize(Projectile projectile) { }
     public void SetTarget(Transform target)
     {
         _target = target;
+        Debug.Log($"Target is null? {_target == null}");
     }
 
     private void _rotateToTarget()
@@ -55,12 +47,12 @@ public class Homing : MonoBehaviour, IProjectileModifier
 
         // add wiggle amount to final rotation.
         _time += Time.deltaTime;
-        if (_time > MISSILE_WIGGLE_PERIOD)
-            _time -= MISSILE_WIGGLE_PERIOD;
+        if (_time > WigglePeriod)
+            _time -= WigglePeriod;
 
         // totalWiggle gets multiplied by (TurnRate * WiggleFraction) so that it doesn't overpower the homing 
-        float wiggleMagnitude = Utils.Sine(_time / MISSILE_WIGGLE_PERIOD, 0, 1, 0);
-        float totalWiggle = wiggleMagnitude * MISSILE_WIGGLE_FRACTION * TurnRate;
+        float wiggleMagnitude = Utils.Sine(_time / WigglePeriod, 0, 1, 0);
+        float totalWiggle = wiggleMagnitude * WiggleFraction * TurnRate;
 
         // unsure of why headingToTarget needs to be inverted here, but it IS necessary.
         headingToTarget = (headingToTarget + totalWiggle) * -1;

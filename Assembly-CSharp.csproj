@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\Player\Player2DController.cs" />
      <Compile Include="Assets\Scripts\Audio\BackgroundMusicManager.cs" />
      <Compile Include="Assets\Scripts\Audio\Objects\Audio.cs" />
+     <Compile Include="Assets\Scripts\Audio\Objects\BackgroundMusic.cs" />
      <Compile Include="Assets\Scripts\Extras\IDamageable.cs" />
      <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Weapons\Params\MissileParams.cs" />
@@ -72,6 +73,7 @@
      <Compile Include="Assets\Scripts\Extras\Entity.cs" />
      <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
      <Compile Include="Assets\Scripts\Weapons\WeaponSystems\WeaponSystem.cs" />
+     <Compile Include="Assets\Scripts\Weapons\ProjectileModifiers\ProjectileModifier.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHitByDanmaku.cs" />
      <Compile Include="Assets\Scripts\Audio\Objects\AudioManagerScriptable.cs" />
      <Compile Include="Assets\Scripts\Weapons\WeaponSystems\MissileSystem.cs" />
@@ -86,12 +88,10 @@
      <Compile Include="Assets\Scripts\ShipMods\Objects\ModOption.cs" />
      <Compile Include="Assets\Scripts\ShipMods\Objects\Mod.cs" />
      <Compile Include="Assets\Scripts\Weapons\ProjectileModifiers\SpeedRamp.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Objects\FireGroup.cs" />
      <Compile Include="Assets\Scripts\Weapons\Params\WeaponSystemParams.cs" />
      <Compile Include="Assets\Scripts\Weapons\Projectile.cs" />
      <Compile Include="Assets\Scripts\Weapons\Objects\Enums.cs" />
-     <Compile Include="Assets\Scripts\Weapons\Objects\FireGroup.cs" />
-     <Compile Include="Assets\Scripts\Weapons\ProjectileModifiers\ProjectileModifier.cs" />
-     <Compile Include="Assets\Scripts\Audio\Objects\BackgroundMusic.cs" />
  <Reference Include="UnityEngine">
  <HintPath>D:/Tools/Unity/Editors/2020.3.22f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

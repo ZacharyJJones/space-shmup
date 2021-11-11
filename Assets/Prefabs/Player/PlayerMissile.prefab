@@ -130,7 +130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052b1300303f9204c8fb84eb1b4f0012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurnRate: 0
+  TurnRate: 60
+  TargetTeam: 2
 --- !u!114 &6309264265038603787
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class MissileSystem : WeaponSystem
     public override void PostInstantiation(Projectile missile)
     {
         var homingComponent = missile.GetComponent<Homing>();
-        if (homingComponent)
+        if (!(homingComponent is null))
         {
             homingComponent.Initialize(missile);
             homingComponent.SetTarget(EntityManager.Instance.GetRandom(EntityType.Enemy)?.transform);
