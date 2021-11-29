@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 813954572705568135}
   m_Layer: 0
-  m_Name: FirePoint1
+  m_Name: MissileLeftFireBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3243237133504811133}
   m_Layer: 0
-  m_Name: FirePoint2
+  m_Name: MissileLeftFireFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1048771113320392888}
   m_Layer: 0
-  m_Name: FirePoint2
+  m_Name: MissileRightFireBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +88,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8579609634732256206}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &2229617149019170678
 GameObject:
@@ -455,6 +455,65 @@ Transform:
   m_Father: {fileID: 4750412518718936680}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!1 &3782175138198575489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6178567026067876571}
+  - component: {fileID: 7536787257810228438}
+  m_Layer: 0
+  m_Name: LaserSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6178567026067876571
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782175138198575489}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 670967189598028036}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7536787257810228438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782175138198575489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 964e957985012da4395a3363a9018dde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProjectilePrefab: {fileID: 6882916464959500167, guid: e82104a095f39de49b7e99b7af9eea4e,
+    type: 3}
+  FiringSound: 2
+  FireGroups:
+  - FireLocations:
+    - {fileID: 1449563473891977385}
+    - {fileID: 5798868355168863799}
+  Params:
+    Damage: 1
+    Speed: 5
+    InaccuracyInDegrees: 15
+    CanFire: 1
+    DelayPerVolley: 1.25
+    ShotsPerVolleyFired: 6
+    ShotDelayInVolley: 0.05
+  InaccuracyInDegrees: 15
 --- !u!1 &3794674087673292568
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +523,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5653436421086674160}
-  - component: {fileID: 4303956769829690446}
   m_Layer: 0
   m_Name: Missiles
   m_TagString: Untagged
@@ -489,38 +547,6 @@ Transform:
   m_Father: {fileID: 3760219525037642807}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4303956769829690446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3794674087673292568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d34c631c436cadd4ba9b6a33ef4b732a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProjectilePrefab: {fileID: 6309264265038603776, guid: 04c5ffae640ecc54c9014cd6383a63df,
-    type: 3}
-  FiringSound: 5
-  FireGroups:
-  - FireLocations:
-    - {fileID: 813954572705568135}
-    - {fileID: 3243237133504811133}
-  - FireLocations:
-    - {fileID: 645613884139117190}
-    - {fileID: 1048771113320392888}
-  Params:
-    Damage: 3
-    Speed: 15
-    InaccuracyInDegrees: 0
-    CanFire: 1
-    DelayPerVolley: 2.15
-    ShotsPerVolleyFired: 4
-    ShotDelayInVolley: 0.33
-  MissileParams:
-    TurnRate: 60
 --- !u!1 &5435593663482730665
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +557,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2081903138861007103}
   - component: {fileID: 5974374782146478771}
-  - component: {fileID: 8366701187464193638}
+  - component: {fileID: 1108261936978109910}
+  - component: {fileID: 1199335851508047246}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -568,10 +595,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 5
-  LaserSystem: {fileID: 0}
-  MissileSystem: {fileID: 0}
-  Player2DController: {fileID: 0}
---- !u!114 &8366701187464193638
+--- !u!114 &1108261936978109910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5435593663482730665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab1b78fd2d45e764fa0f39fe33da671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 3
+--- !u!114 &1199335851508047246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -583,11 +620,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3fd07d61726404da495522231f41ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mode: 0
-  MinRestriction: {x: 0, y: 0}
-  MaxRestriction: {x: 0, y: 0}
-  MoveSpeed: 0
-  SlowMoMult: 0
+  MovementArea: {fileID: 0}
+  MoveSpeed: 6
+  SlowMoMult: 0.2
+--- !u!1 &5892766022338618254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4527111114670411533}
+  - component: {fileID: 2950917579579938010}
+  m_Layer: 0
+  m_Name: MissileSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4527111114670411533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5892766022338618254}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 670967189598028036}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2950917579579938010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5892766022338618254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d34c631c436cadd4ba9b6a33ef4b732a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProjectilePrefab: {fileID: 6309264265038603776, guid: 04c5ffae640ecc54c9014cd6383a63df,
+    type: 3}
+  FiringSound: 5
+  FireGroups:
+  - FireLocations:
+    - {fileID: 813954572705568135}
+    - {fileID: 1048771113320392888}
+    - {fileID: 3243237133504811133}
+    - {fileID: 645613884139117190}
+  Params:
+    Damage: 2
+    Speed: 6
+    InaccuracyInDegrees: 0
+    CanFire: 1
+    DelayPerVolley: 3
+    ShotsPerVolleyFired: 4
+    ShotDelayInVolley: 0.25
 --- !u!1 &6000202521737998516
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,7 +692,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5931426657724796205}
-  - component: {fileID: 2702199021158407086}
   m_Layer: 0
   m_Name: Lasers
   m_TagString: Untagged
@@ -621,34 +715,6 @@ Transform:
   m_Father: {fileID: 3760219525037642807}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2702199021158407086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6000202521737998516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 964e957985012da4395a3363a9018dde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProjectilePrefab: {fileID: 6882916464959500167, guid: e82104a095f39de49b7e99b7af9eea4e,
-    type: 3}
-  FiringSound: 2
-  FireGroups:
-  - FireLocations:
-    - {fileID: 1449563473891977385}
-    - {fileID: 5798868355168863799}
-  Params:
-    Damage: 1
-    Speed: 15
-    InaccuracyInDegrees: 15
-    CanFire: 1
-    DelayPerVolley: 1.25
-    ShotsPerVolleyFired: 6
-    ShotDelayInVolley: 0.05
-  InaccuracyInDegrees: 15
 --- !u!1 &6130049702348236823
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,7 +755,7 @@ GameObject:
   m_Component:
   - component: {fileID: 645613884139117190}
   m_Layer: 0
-  m_Name: FirePoint1
+  m_Name: MissileRightFireFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -707,7 +773,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8579609634732256206}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &6821279581356813169
 GameObject:
@@ -817,7 +883,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4527111114670411533}
+  - {fileID: 6178567026067876571}
   m_Father: {fileID: 2081903138861007103}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -880,8 +948,8 @@ Transform:
   m_LocalPosition: {x: 0.09, y: -0.25, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children:
-  - {fileID: 645613884139117190}
   - {fileID: 1048771113320392888}
+  - {fileID: 645613884139117190}
   m_Father: {fileID: 5653436421086674160}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -60}

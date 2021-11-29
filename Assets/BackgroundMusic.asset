@@ -26,7 +26,7 @@ MonoBehaviour:
   MusicTracks:
   - TrackName: Andromeda Journey
     Clip: {fileID: 8300000, guid: 8b07232f925f41445ac03a706f52d56a, type: 3}
-  - TrackName: 'Sector: Anachron'
+  - TrackName: Anachron Sector
     Clip: {fileID: 8300000, guid: 0b95e7e0851da50489a41e677ed32c3a, type: 3}
   - TrackName: Kalliope
     Clip: {fileID: 8300000, guid: 2213e189092ee7f459c2c6d97c323f6a, type: 3}

@@ -16,7 +16,9 @@ public class Entity : MonoBehaviour
             return;
 
         EntityManager.Instance.AddEntity(this, Type);
-        //transform.SetParent(EntityManager.Instance.transform, true);
+
+        // to avoid hierarchy clutter
+        transform.SetParent(EntityManager.Instance.transform, true);
     }
 
     /// <summary> Removes this entity from being tracked by the entity manager, so it may be destroyed safely. </summary>

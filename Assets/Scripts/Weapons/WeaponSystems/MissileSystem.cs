@@ -3,7 +3,7 @@
 public class MissileSystem : WeaponSystem
 {
     // Editor Fields
-    public MissileParams MissileParams;
+    // public MissileParams MissileParams;
 
 
     private void Awake() => base.OnAwake();
@@ -12,10 +12,10 @@ public class MissileSystem : WeaponSystem
     public override void PostInstantiation(Projectile missile)
     {
         var homingComponent = missile.GetComponent<Homing>();
-        if (!(homingComponent is null))
-        {
-            homingComponent.Initialize(missile);
-            homingComponent.SetTarget(EntityManager.Instance.GetRandom(EntityType.Enemy)?.transform);
-        }
+        if (homingComponent is null)
+            return;
+
+        homingComponent.Initialize(missile);
+        homingComponent.SetTarget(EntityManager.Instance.GetRandom(EntityType.Enemy)?.transform);
     }
 }

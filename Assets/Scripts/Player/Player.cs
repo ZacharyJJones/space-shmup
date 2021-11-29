@@ -7,9 +7,8 @@ public class Player : MonoBehaviour, IDamageable
 {
     // Editor Fields
     public int MaxHealth;
-    public LaserSystem LaserSystem;
-    public MissileSystem MissileSystem;
-    public Player2DController Player2DController;
+    // public LaserSystem LaserSystem;
+    // public MissileSystem MissileSystem;
 
     // Runtime Fields
     private int _currentHealth;
@@ -27,7 +26,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             _currentHealth = MaxHealth;
         }
-        
+
         // if dead, do something
     }
 

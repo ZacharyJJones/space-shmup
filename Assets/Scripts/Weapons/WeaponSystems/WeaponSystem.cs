@@ -31,7 +31,7 @@ public class WeaponSystem : MonoBehaviour
             StartCoroutine(_fireVolley());
         }
     }
-    
+
 
     private IEnumerator _fireVolley()
     {
@@ -55,11 +55,12 @@ public class WeaponSystem : MonoBehaviour
                 _fireLocsTracking[i] %= FireGroups[i].FireLocations.Length;
                 //
                 // var gameObject = Instantiate(
-                //     ProjectilePrefab, 
+                //     ProjectilePrefab,
                 //     spawnPoint.position,
                 //     Quaternion.Euler(0, 0, spawnPoint.rotation.eulerAngles.z),
                 //     null
                 // );
+                //
                 var rotation = Quaternion.Lerp(Quaternion.identity, spawnPoint.rotation, 1f);
                 // var gameObject = Instantiate(ProjectilePrefab, spawnPoint.position, Quaternion.identity, null);
                 var gameObject = Instantiate(ProjectilePrefab, spawnPoint.position, rotation, null);
@@ -73,7 +74,7 @@ public class WeaponSystem : MonoBehaviour
             }
         }
     }
-    
+
     public virtual void PostInstantiation(Projectile instantiated)
     {
         // empty for children to add functionality if needed

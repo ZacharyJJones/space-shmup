@@ -12,34 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef33399caab83b41b1635af4c4bc10b, type: 3}
   m_Name: AudioManagerData_Gameplay
   m_EditorClassIdentifier: 
-  ChildAudio: {fileID: 0}
   Audio:
-  - Trigger: 1
-    SceneTrigger: 1
-    Clip: {fileID: 8300000, guid: af76e7f30e99af0439187af7ff7a30ae, type: 3}
-    Volume: 0.5
-    Pitch: 1
-    Loop: 0
   - Trigger: 2
-    SceneTrigger: 1
     Clip: {fileID: 8300000, guid: af76e7f30e99af0439187af7ff7a30ae, type: 3}
     Volume: 1
     Pitch: 1
     Loop: 0
   - Trigger: 3
-    SceneTrigger: 1
     Clip: {fileID: 8300000, guid: 5e311755c95803a418dcb5ee43273389, type: 3}
     Volume: 0.5
     Pitch: 1
     Loop: 0
   - Trigger: 4
-    SceneTrigger: 1
     Clip: {fileID: 8300000, guid: 8fe89eb8436699e4d878065342e531c6, type: 3}
     Volume: 0.5
     Pitch: 1
     Loop: 0
   - Trigger: 5
-    SceneTrigger: 1
     Clip: {fileID: 8300000, guid: 65ad7a368e1573540a9bb185dbf4c487, type: 3}
     Volume: 1
     Pitch: 1
