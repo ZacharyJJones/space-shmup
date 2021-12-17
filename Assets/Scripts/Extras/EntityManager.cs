@@ -8,13 +8,13 @@ public class EntityManager : MonoBehaviour
 {
     // Editor Fields
     public static EntityManager Instance;
-    public Bounds ActiveZone;
+
+    public BoxCollider2D ActiveZone;
 
     // Runtime Fields
-    private Dictionary<EntityType, List<EntityManagerItem>> Entities;
-    private Dictionary<EntityType, int> _nextIDToGenerateByEntityType;
+    private Dictionary<EntityType, List<Entity>> Entities;
 
-    public GameObject ActivePlayerEntity => GetRandom(EntityType.Player);
+    public Entity ActivePlayerEntity => GetRandom(EntityType.Player);
 
 
     private void Awake()
@@ -32,11 +32,7 @@ public class EntityManager : MonoBehaviour
 
         Entities = entityTypeValues.ToDictionary(
             x => x,
-            x => new List<EntityManagerItem>()
-        );
-        _nextIDToGenerateByEntityType = entityTypeValues.ToDictionary(
-            x => x,
-            x => 0
+            x => new List<Entity>()
         );
     }
 
@@ -47,48 +43,44 @@ public class EntityManager : MonoBehaviour
 
     private void _entitiesCleanup()
     {
-        var keys = Entities.Keys;
-        foreach (EntityType key in keys)
+        foreach (var list in Entities.Values)
         {
-            var list = Entities[key];
             for (int i = list.Count - 1; i >= 0; i--)
             {
-                if (ActiveZone.Contains(list[i].GameObject.transform.position))
+                if (!Utils.IsPointInCollider(list[i].transform.position, ActiveZone))
                 {
-                    continue;
+                    Destroy(list[i].gameObject);
+                    list.RemoveAt(i);
                 }
-
-                Destroy(list[i].GameObject);
-                Entities[key].RemoveAt(i);
             }
         }
     }
 
-    public GameObject GetRandom(EntityType type)
+    public Entity GetRandom(EntityType type)
     {
-        if (!Entities.TryGetValue(type, out var data) || data.Count <= 0)
+        if (!Entities.TryGetValue(type, out var list) || list.Count <= 0)
             return null;
 
-        int i = Random.Range(0, data.Count);
-        return data[i].GameObject;
+        int i = Random.Range(0, list.Count);
+        return Entities[type][i];
     }
 
-    public void AddEntity(Entity entity, EntityType type)
+    public void AddEntity(EntityType type, Entity entity)
     {
         if (!Entities.ContainsKey(type))
             return;
 
-        entity.ID = _nextIDToGenerateByEntityType[type];
-        Entities[type].Add(new EntityManagerItem(entity.ID, entity.gameObject));
-        _nextIDToGenerateByEntityType[type] += 1;
+        Entities[type].Add(entity);
+
+        // to avoid hierarchy clutter
+        entity.transform.SetParent(Instance.transform, true);
     }
 
-    public void RemoveEntity(EntityType type, int id)
+    public void RemoveEntity(EntityType type, Entity entity)
     {
-        if (!Entities.TryGetValue(type, out var list))
+        if (!Entities.ContainsKey(type))
             return;
 
-        int index = list.FindIndex(x => x.ID == id);
-        list.RemoveAt(index);
+        Entities[type].Remove(entity);
     }
 }

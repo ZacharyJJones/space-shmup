@@ -57,8 +57,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlayTrigger(AudioTrigger trigger)
     {
-        if (trigger != AudioTrigger.Undefined)
-            _audioByTrigger[trigger].Play();
+        if (trigger == AudioTrigger.Undefined) return;
+        if (!_audioByTrigger.TryGetValue(trigger, out var audio))
+        {
+            Debug.LogWarning("Attempted to play audio trigger which does not exist in dictionary.");
+            return;
+        }
+        audio.Play();
     }
 
     private void _loadAudio(IEnumerable<Audio> audios, bool isGlobalAudio = false)

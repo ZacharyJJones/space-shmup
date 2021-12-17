@@ -1,18 +1,23 @@
 ﻿using UnityEngine;
 using DanmakU;
 
-public class Enemy : MonoBehaviour, IDamageable
+public class Enemy : Entity, IDamageable
 {
+    private const float DEATH_TIME = 5f;
+
     // Editor Variables
     public int Health;
     public float MoveSpeed;
 
     // Runtime Variables
     private int _currentHealth;
-    
 
-    private void Start()
+    public override EntityType Type => EntityType.Enemy;
+
+
+    protected override void Start()
     {
+        base.Start();
         _currentHealth = Health;
     }
 
@@ -28,7 +33,9 @@ public class Enemy : MonoBehaviour, IDamageable
         if (_currentHealth < 0)
         {
             GameDataManager.Instance.RegisterEnemyDeath(this);
+            EntityManager.Instance.RemoveEntity(Type, this);
+            gameObject.SetActive(false);
+            Destroy(gameObject, DEATH_TIME);
         }
-        Destroy(gameObject);
     }
 }

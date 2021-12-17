@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Player2DMovement : MonoBehaviour
 {
-    // Intended as a subclass for other forms of player movement.
-    // Point is to put this on the player prefab, and then load settings or prefs...
-    // ... to get the preferred option. For now, just default into keyboard control.
+    // Due to issues with "Q" key switching of movement control modes, I am removing that feature for the time being.
+    // -- Future plan is to have a option in "settings" menu which will be read by this script on unpause/start...
+    // ... which sets up the appropriate script for use.
 
     // Editor Fields
     [Header("Control")]
@@ -17,8 +17,11 @@ public class Player2DMovement : MonoBehaviour
 
     protected virtual void Start()
     {
-        var keyboardMovement = gameObject.AddComponent<PlayerKeyboardMovement>();
-        keyboardMovement.ImportSettings(this);
+        // var keyboardMovement = gameObject.AddComponent<PlayerKeyboardMovement>();
+        // keyboardMovement.ImportSettings(this);
+        // Destroy(this);
+        var mouseMovement = gameObject.AddComponent<PlayerMouseMovement>();
+        mouseMovement.ImportSettings(this);
         Destroy(this);
     }
 

@@ -2,7 +2,7 @@
 {
     Undefined = 0,
 
-    Bullet,
+    Projectile,
     Enemy,
     Player
 }

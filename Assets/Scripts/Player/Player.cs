@@ -3,18 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamageable
+public class Player : Entity, IDamageable
 {
     // Editor Fields
     public int MaxHealth;
-    // public LaserSystem LaserSystem;
-    // public MissileSystem MissileSystem;
 
     // Runtime Fields
     private int _currentHealth;
 
-    public void Awake()
+
+    public override EntityType Type => EntityType.Player;
+
+
+    protected override void Start()
     {
+        base.Start();
         _currentHealth = MaxHealth;
     }
 
@@ -26,8 +29,6 @@ public class Player : MonoBehaviour, IDamageable
         {
             _currentHealth = MaxHealth;
         }
-
-        // if dead, do something
     }
 
     // this handles receiving non-danmaku hits.

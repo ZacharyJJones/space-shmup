@@ -4,14 +4,15 @@ using UnityEngine;
 public class Homing : MonoBehaviour, IProjectileModifier
 {
     // Editor Fields
-    public Transform Target; // usually set by the thing firing the homing projectile.
+    public GameObject Target; // usually set by the thing firing the homing projectile.
     public float TurnRate;
+    public float WigglePeriod = 2f;
     [Range(0, 180)]
     public float WiggleMaxTurnDelta;
-    public float WigglePeriod = 2f;
 
     // Runtime Fields
     private float _time;
+
 
     private void Start()
     {
@@ -20,7 +21,7 @@ public class Homing : MonoBehaviour, IProjectileModifier
 
     private void FixedUpdate()
     {
-        if (!Target)
+        if (!Target || !Target.activeSelf)
         {
             Destroy(this);
             return;
@@ -29,9 +30,12 @@ public class Homing : MonoBehaviour, IProjectileModifier
     }
 
     public void Initialize(Projectile projectile) { }
-    public void SetTarget(Transform target)
+    public void SetTarget(Entity target)
     {
-        Target = target;
+        if (target && target != null)
+        {
+            Target = target.gameObject;
+        }
     }
 
     private void _rotateToTarget()
@@ -40,7 +44,7 @@ public class Homing : MonoBehaviour, IProjectileModifier
         if (_time > WigglePeriod)
             _time -= WigglePeriod;
 
-        float targetHeading = Utils.HeadingFromNormalizedVector((Target.position - transform.position).normalized);
+        float targetHeading = Utils.HeadingFromNormalizedVector((Target.transform.position - transform.position).normalized);
 
         targetHeading += Utils.Sine(_time / WigglePeriod, 0, 1, 0) * WiggleMaxTurnDelta;
 

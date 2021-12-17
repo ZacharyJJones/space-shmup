@@ -17,7 +17,7 @@ public class GameDataManager : MonoBehaviour
     public delegate void WaveStartHandler(object sender);
     public event WaveEndHandler OnWaveEnd;
     public event WaveStartHandler OnWaveStart;
-    
+
     private void Awake()
     {
         if (Instance != null)
@@ -69,7 +69,7 @@ public class GameDataManager : MonoBehaviour
 
         //return chosenEnemy;
     }
-    
+
     // once player selects an option, can start next wave
 
     public void RegisterEnemyDeath(Enemy enemy)
@@ -77,16 +77,17 @@ public class GameDataManager : MonoBehaviour
         EnemiesDefeatedThisWave++;
         if (EnemiesDefeatedThisWave <= EnemyDefeatWaveThreshold)
             return;
-        
-        OnWaveEnd?.Invoke(this);
+
+        // OnWaveEnd?.Invoke(this);
+        EnemiesDefeatedThisWave = 0;
         Debug.Log("Wave Ended.");
-        
+
         // What should happen??
         // 1. disable enemy spawner
         // 2. wait until all enemies are gone
         // 3. spawn end-of-level choices
         // -- right now, this means picking a "level" to go to.
-            
+
         // 4. Begin next level
         // -- hack solution for now: just wait some time then start
         StartCoroutine(Utils.SimpleWait(5f, () =>

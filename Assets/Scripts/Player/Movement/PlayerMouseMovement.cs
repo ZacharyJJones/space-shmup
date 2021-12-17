@@ -10,16 +10,6 @@ public class PlayerMouseMovement : Player2DMovement
         _mainCam = Camera.main;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            var keyboardMovement = gameObject.AddComponent<PlayerKeyboardMovement>();
-            keyboardMovement.ImportSettings(this);
-            Destroy(this);
-        }
-    }
-
     // do the actual movement here
     private void FixedUpdate()
     {

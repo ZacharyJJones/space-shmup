@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class PlayerKeyboardMovement : Player2DMovement
 {
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            var mouseMovement = gameObject.AddComponent<PlayerMouseMovement>();
-            mouseMovement.ImportSettings(this);
-            Destroy(this);
-        }
-    }
-
     private void FixedUpdate()
     {
         float horiz = Input.GetAxis("Horizontal");

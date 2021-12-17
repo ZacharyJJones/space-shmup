@@ -302,9 +302,10 @@ GameObject:
   m_Component:
   - component: {fileID: 290612737}
   - component: {fileID: 290612738}
+  - component: {fileID: 290612739}
   m_Layer: 0
   m_Name: EntityManager
-  m_TagString: Untagged
+  m_TagString: EntityManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -335,9 +336,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35cf1e4b20e8024681cede76342f338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActiveZone:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 14, y: 8, z: 0}
+  ActiveZone: {fileID: 290612739}
+--- !u!61 &290612739
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290612736}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 28, y: 16}
+  m_EdgeRadius: 0
 --- !u!1001 &326444735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -686,7 +711,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 19, y: 9.5}
+  m_Size: {x: 21, y: 11.5}
   m_EdgeRadius: 0
 --- !u!20 &519420031
 Camera:
@@ -715,7 +740,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1359,7 +1384,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1478319753}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11, y: 0, z: 0}
+  m_LocalPosition: {x: 13, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1673,8 +1698,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 1073431715}
   TurnRate: 100
-  WiggleMaxTurnDelta: 0
   WigglePeriod: 2
+  WiggleMaxTurnDelta: 0
 --- !u!1 &2135329479
 GameObject:
   m_ObjectHideFlags: 0

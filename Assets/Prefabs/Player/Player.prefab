@@ -557,8 +557,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2081903138861007103}
   - component: {fileID: 5974374782146478771}
-  - component: {fileID: 1108261936978109910}
   - component: {fileID: 1199335851508047246}
+  - component: {fileID: 3137036479170215869}
+  - component: {fileID: 1916926851955513423}
+  - component: {fileID: 5010205148005676960}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -595,19 +597,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 5
---- !u!114 &1108261936978109910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5435593663482730665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab1b78fd2d45e764fa0f39fe33da671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 3
 --- !u!114 &1199335851508047246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,6 +612,48 @@ MonoBehaviour:
   MovementArea: {fileID: 0}
   MoveSpeed: 6
   SlowMoMult: 0.2
+--- !u!114 &3137036479170215869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5435593663482730665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0970af4f8d9661e4fa80861c5bb48775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1916926851955513423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5435593663482730665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4b015066d497d4f87de8793c32970b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 5974374782146478771}
+  DanmakuCollider: {fileID: 3137036479170215869}
+--- !u!58 &5010205148005676960
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5435593663482730665}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
 --- !u!1 &5892766022338618254
 GameObject:
   m_ObjectHideFlags: 0

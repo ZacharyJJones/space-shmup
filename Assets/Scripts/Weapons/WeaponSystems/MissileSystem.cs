@@ -16,6 +16,6 @@ public class MissileSystem : WeaponSystem
             return;
 
         homingComponent.Initialize(missile);
-        homingComponent.SetTarget(EntityManager.Instance.GetRandom(EntityType.Enemy)?.transform);
+        homingComponent.SetTarget(EntityManager.Instance.GetRandom(EntityType.Enemy));
     }
 }
