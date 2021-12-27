@@ -60,7 +60,7 @@ public class AudioManager : MonoBehaviour
         if (trigger == AudioTrigger.Undefined) return;
         if (!_audioByTrigger.TryGetValue(trigger, out var audio))
         {
-            Debug.LogWarning("Attempted to play audio trigger which does not exist in dictionary.");
+            Debug.LogWarning($"Attempted to play audio trigger which does not exist in dictionary. {trigger}");
             return;
         }
         audio.Play();

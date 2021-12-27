@@ -11,7 +11,6 @@ public class Player : Entity, IDamageable
     // Runtime Fields
     private int _currentHealth;
 
-
     public override EntityType Type => EntityType.Player;
 
 
@@ -29,6 +28,8 @@ public class Player : Entity, IDamageable
         {
             _currentHealth = MaxHealth;
         }
+
+        Debug.Log($"Player took {damage} damage. HP is now {_currentHealth}.");
     }
 
     // this handles receiving non-danmaku hits.
