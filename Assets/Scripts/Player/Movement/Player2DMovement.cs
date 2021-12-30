@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Player2DMovement : MonoBehaviour
 {
-    // Due to issues with "Q" key switching of movement control modes, I am removing that feature for the time being.
+    // Due to issues with using a key to switch movement control modes, I am removing that feature for the time being.
     // -- Future plan is to have a option in "settings" menu which will be read by this script on unpause/start...
     // ... which sets up the appropriate script for use.
 
@@ -17,15 +17,14 @@ public class Player2DMovement : MonoBehaviour
 
     protected virtual void Start()
     {
-        // var keyboardMovement = gameObject.AddComponent<PlayerKeyboardMovement>();
-        // keyboardMovement.ImportSettings(this);
-        // Destroy(this);
-        var mouseMovement = gameObject.AddComponent<PlayerMouseMovement>();
-        mouseMovement.ImportSettings(this);
+        var keyboardMovement = gameObject.AddComponent<PlayerKeyboardMovement>();
+        keyboardMovement.ImportSettings(this);
+        // var mouseMovement = gameObject.AddComponent<PlayerMouseMovement>();
+        // mouseMovement.ImportSettings(this);
         Destroy(this);
     }
 
-    public void ImportSettings(Player2DMovement old)
+    protected void ImportSettings(Player2DMovement old)
     {
         MovementArea = old.MovementArea;
         MoveSpeed = old.MoveSpeed;

@@ -245,6 +245,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161344924}
   m_CullTransparentMesh: 0
+--- !u!1 &162485552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162485553}
+  m_Layer: 0
+  m_Name: Pickup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &162485553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162485552}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.8357123, y: -1.5774508, z: -0.5982014}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &214168704
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,7 +320,7 @@ Transform:
   - {fileID: 1905795779}
   - {fileID: 1672576627}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &290612736
 GameObject:
@@ -834,7 +864,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &903925532
 GameObject:
@@ -1091,7 +1121,7 @@ Transform:
   - {fileID: 1757451888}
   - {fileID: 509113379}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1100675270
 GameObject:
@@ -1315,7 +1345,7 @@ Transform:
   - {fileID: 121624906}
   - {fileID: 1100675271}
   m_Father: {fileID: 2135329480}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1478319753
 GameObject:
@@ -1329,12 +1359,12 @@ GameObject:
   - component: {fileID: 1478319755}
   - component: {fileID: 1478319754}
   m_Layer: 0
-  m_Name: EnemySpawner
+  m_Name: EnemyWaveManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1478319754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1344,12 +1374,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1478319753}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1291752446749a749894c0254475c3fe, type: 3}
+  m_Script: {fileID: 11500000, guid: c67e5e41f2d1719459bac3a746366bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnZone: {fileID: 1478319755}
-  SpawnRate: 1
-  SpawnThreshold: 100
+  EnemyToSpawn: {fileID: 2971012956097978019, guid: 57f3b75580605d742a57a0ae71dcf723,
+    type: 3}
+  SpawnRate: 10
+  SpawnThreshold: 20
+  WaveNumber: 0
+  EnemiesDefeatedThisWave: 0
+  EnemiesInWave: 0
 --- !u!61 &1478319755
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1384,10 +1419,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1478319753}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13, y: 0, z: 0}
+  m_LocalPosition: {x: 12, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2135329480}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1672576626
@@ -1464,12 +1499,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfca3e9c0b3504d439877d0f99cee91b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mods: {fileID: 11400000, guid: 7ae7245a84879da4d916bafadc343d9f, type: 2}
-  EnemyToSpawn: {fileID: 2971012956097978019, guid: 57f3b75580605d742a57a0ae71dcf723,
-    type: 3}
-  WaveNumber: 0
-  EnemiesDefeatedThisWave: 0
-  EnemyDefeatWaveThreshold: 0
 --- !u!1 &1757451887
 GameObject:
   m_ObjectHideFlags: 0
@@ -1645,7 +1674,7 @@ RectTransform:
   m_Children:
   - {fileID: 161344925}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1730,6 +1759,7 @@ Transform:
   - {fileID: 903925534}
   - {fileID: 290612737}
   - {fileID: 1726817770}
+  - {fileID: 1478319756}
   - {fileID: 1404691939}
   m_Father: {fileID: 0}
   m_RootOrder: 2

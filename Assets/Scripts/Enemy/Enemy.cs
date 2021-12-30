@@ -32,7 +32,7 @@ public class Enemy : Entity, IDamageable
         _currentHealth -= damage;
         if (_currentHealth < 0)
         {
-            GameDataManager.Instance.RegisterEnemyDeath(this);
+            EnemyWaveManager.Instance.RegisterEnemyDeath(this);
             EntityManager.Instance.RemoveEntity(Type, this);
             gameObject.SetActive(false);
             Destroy(gameObject, DEATH_TIME);

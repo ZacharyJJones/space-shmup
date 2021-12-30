@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8388795480330087715}
   m_Layer: 0
   m_Name: Danmaku
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 813954572705568135}
   m_Layer: 0
   m_Name: MissileLeftFireBack
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 3243237133504811133}
   m_Layer: 0
   m_Name: MissileLeftFireFront
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 911948854611385768}
   m_Layer: 0
   m_Name: PlayerDanmakuCollider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 1048771113320392888}
   m_Layer: 0
   m_Name: MissileRightFireBack
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 5627469108572267614}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -445,7 +445,7 @@ GameObject:
   - component: {fileID: 757250937738734285}
   m_Layer: 0
   m_Name: MissileLeft
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -559,7 +559,7 @@ GameObject:
   - component: {fileID: 7536787257810228438}
   m_Layer: 0
   m_Name: LaserSystem
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -617,7 +617,7 @@ GameObject:
   - component: {fileID: 5653436421086674160}
   m_Layer: 0
   m_Name: Missiles
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -653,7 +653,7 @@ GameObject:
   - component: {fileID: 1916926851955513423}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -719,6 +719,7 @@ MonoBehaviour:
   DanmakuCollider: {fileID: 911948854611385768}
   DanmakuShieldCollider: {fileID: 3079057192884300220}
   ShieldTime: 3
+  EndShieldScale: 0
 --- !u!1 &5677415856878494952
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,7 +732,7 @@ GameObject:
   - component: {fileID: 3060319428588920589}
   m_Layer: 0
   m_Name: CircleSprite
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -814,7 +815,7 @@ GameObject:
   - component: {fileID: 2950917579579938010}
   m_Layer: 0
   m_Name: MissileSystem
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -873,7 +874,7 @@ GameObject:
   - component: {fileID: 5931426657724796205}
   m_Layer: 0
   m_Name: Lasers
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -935,7 +936,7 @@ GameObject:
   - component: {fileID: 645613884139117190}
   m_Layer: 0
   m_Name: MissileRightFireFront
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -967,7 +968,7 @@ GameObject:
   - component: {fileID: 3079057192884300220}
   m_Layer: 0
   m_Name: HitByDanmakuShield
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1027,7 +1028,7 @@ GameObject:
   - component: {fileID: 2875420906514994682}
   m_Layer: 0
   m_Name: MissileBox
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1108,7 +1109,7 @@ GameObject:
   - component: {fileID: 670967189598028036}
   m_Layer: 0
   m_Name: WeaponSystems
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1140,7 +1141,7 @@ GameObject:
   - component: {fileID: 2287392162055445309}
   m_Layer: 0
   m_Name: ShipGraphics
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1172,7 +1173,7 @@ GameObject:
   - component: {fileID: 4710625487055124022}
   m_Layer: 0
   m_Name: MissileRight
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1256,7 +1257,7 @@ GameObject:
   - component: {fileID: 3345901337086613218}
   m_Layer: 0
   m_Name: Engine
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
