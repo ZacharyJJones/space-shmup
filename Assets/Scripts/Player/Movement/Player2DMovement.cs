@@ -10,6 +10,7 @@ public class Player2DMovement : MonoBehaviour
     // Editor Fields
     [Header("Control")]
     public BoxCollider2D MovementArea;
+
     [Header("Speed Settings")]
     public float MoveSpeed;
     [Range(0,1)]

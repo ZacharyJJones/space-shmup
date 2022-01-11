@@ -1,6 +1,8 @@
 using System;
+using System.ComponentModel;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyWaveManager : MonoBehaviour
 {
@@ -24,6 +26,11 @@ public class EnemyWaveManager : MonoBehaviour
     public event WaveEndHandler OnWaveEnd;
     public event WaveStartHandler OnWaveStart;
 
+    // public for other scripts to trigger a wave start.
+    public void StartNextWave(object sender)
+    {
+        OnWaveStart?.Invoke(sender);
+    }
 
     private void Awake()
     {

@@ -5,7 +5,7 @@ public class Projectile : Entity
     // Editor Fields
     public Team Team;
     public AudioTrigger ImpactAudio;
-    public Rigidbody2D RigidBody;
+    public Rigidbody2D Rigidbody;
 
     // Runtime Fields
     public int Damage { get; set; }
@@ -17,7 +17,7 @@ public class Projectile : Entity
     private void FixedUpdate()
     {
         transform.Translate(Speed * Time.deltaTime * Vector3.right);
-        RigidBody.MovePosition(RigidBody.position);
+        Rigidbody.MovePosition(Rigidbody.position);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

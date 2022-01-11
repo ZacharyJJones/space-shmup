@@ -651,6 +651,7 @@ GameObject:
   - component: {fileID: 5974374782146478771}
   - component: {fileID: 1199335851508047246}
   - component: {fileID: 1916926851955513423}
+  - component: {fileID: 7199051982398798060}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -720,6 +721,22 @@ MonoBehaviour:
   DanmakuShieldCollider: {fileID: 3079057192884300220}
   ShieldTime: 3
   EndShieldScale: 0
+--- !u!58 &7199051982398798060
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5435593663482730665}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.4
 --- !u!1 &5677415856878494952
 GameObject:
   m_ObjectHideFlags: 0
