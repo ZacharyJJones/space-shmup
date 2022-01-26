@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Team: 1
   ImpactAudio: 4
-  RigidBody: {fileID: 39836715433074502}
+  Rigidbody: {fileID: 39836715433074502}
 --- !u!212 &6882916464959500165
 SpriteRenderer:
   m_ObjectHideFlags: 0

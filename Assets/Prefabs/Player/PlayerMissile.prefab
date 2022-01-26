@@ -132,8 +132,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
   TurnRate: 120
-  WiggleMaxTurnDelta: 10
   WigglePeriod: 1
+  WiggleMaxTurnDelta: 10
 --- !u!114 &6309264265038603790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Team: 1
   ImpactAudio: 6
-  RigidBody: {fileID: 5388024267856484922}
+  Rigidbody: {fileID: 5388024267856484922}
 --- !u!61 &8846971258212944771
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -4,21 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(HoverSelectable))]
-public class HoverSelectAreaChange : MonoBehaviour
+public class HoverSelectAreaChange : HoverSelectableGroup
 {
-    public string Area;
     public Text DisplayText;
+    public string[] Areas;
+
 
     private void Start()
     {
-        var selectable = GetComponent<HoverSelectable>();
-        selectable.OnSelected += _sendTextSelect;
+        InitializeSelectables(Areas, _sendTextSelect);
     }
 
-    private void _sendTextSelect(object sender)
+    public void Initialize(string[] areas, Text areaDisplay)
     {
-        EnemyWaveManager.Instance.StartNextWave();
-        DisplayText.text += Area;
+        Areas = areas;
+        DisplayText = areaDisplay;
+    }
+
+    private void _sendTextSelect(HoverSelectable selected)
+    {
+        DisplayText.text += selected.Key;
+        EnemyWaveManager.Instance.StartNextWave(this);
     }
 }

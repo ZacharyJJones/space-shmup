@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.ComponentModel;
 using UnityEditor;
 using UnityEngine;
@@ -13,6 +14,9 @@ public class EnemyWaveManager : MonoBehaviour
     public GameObject EnemyToSpawn;
     public float SpawnRate = 10f;
     public float SpawnThreshold = 20f;
+
+    public GameObject AreaChoosePrefab;
+    public Vector3 AreaPrefabSpawnLocation;
 
     // Runtime Fields
     [HideInInspector] public int WaveNumber;
@@ -113,43 +117,58 @@ public class EnemyWaveManager : MonoBehaviour
 
     public void RegisterEnemyDeath(Enemy enemy)
     {
+        if (!enabled) return;
+
         Debug.Log("Enemy was defeated");
         EnemiesDefeatedThisWave++;
-        if (EnemiesDefeatedThisWave <= EnemiesInWave)
+        if (EnemiesDefeatedThisWave < EnemiesInWave)
             return;
 
+        // 1. Wave Prep & Enemy Spawner Disable
+        _nextWaveSetup();
+        Debug.Log("Wave Ended.");
+        OnWaveEnd?.Invoke(this);
+
+
+        // 2. wait until all enemies are gone... then
+        // 3. spawn end-of-level choices
+        StartCoroutine(Utils.SimpleWaitConditional(
+            () => (EntityManager.Instance.GetRandom(EntityType.Enemy) == null),
+            _spawnEndOfLevelChoices
+        ));
+    }
+
+    private void _spawnEndOfLevelChoices()
+    {
+        var areaChoicePrefab = Instantiate(
+            AreaChoosePrefab,
+            AreaPrefabSpawnLocation,
+            Quaternion.identity,
+            this.transform
+        );
+        var areaChange = areaChoicePrefab.GetComponent<HoverSelectAreaChange>();
+        areaChange.DisplayText = UserInterfaceManager.Instance.AreaDisplayText;
+        areaChange.Areas = new[] {"A", "B", "C"};
+    }
+
+    private void _nextWaveSetup()
+    {
         EnemiesDefeatedThisWave = 0;
         WaveNumber++;
         SpawnRate += 2f;
         SpawnThreshold += 1f;
         EnemiesInWave += 3;
-        Debug.Log("Wave Ended.");
-        OnWaveEnd?.Invoke(this);
-
-        // What should happen??
-        // 1. disable enemy spawner
-        // 2. wait until all enemies are gone
-        // 3. spawn end-of-level choices
-        // -- right now, this means picking a "level" to go to.
-
-        // 4. Begin next level
-        // -- Eventually, will be waiting for player to select an upgrade and pathway before continuing.
-        //  -- probably have an event somewhere that says "player picked up an upgrade" and subscribe to it in this script.
-        // -- for now, just add a short delay and then start the next one.
-        StartCoroutine(Utils.SimpleWait(5f, () =>
-        {
-            OnWaveStart?.Invoke(this);
-            Debug.Log("Wave Started.");
-        }));
     }
 
 
     private void _onWaveEndEvent(object sender)
     {
+        Debug.Log("Wave Ended");
         enabled = false;
     }
     private void _onWaveStartEvent(object sender)
     {
+        Debug.Log("Wave Started");
         _spawnProgress = 0;
         enabled = true;
     }

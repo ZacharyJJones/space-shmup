@@ -46,7 +46,7 @@ public class Homing : MonoBehaviour, IProjectileModifier
 
         float targetHeading = Utils.HeadingFromNormalizedVector((Target.transform.position - transform.position).normalized);
 
-        targetHeading += Utils.Sine(_time / WigglePeriod, 0, 1, 0) * WiggleMaxTurnDelta;
+        targetHeading += Transforms.Sine(_time / WigglePeriod, 0, 1, 0) * WiggleMaxTurnDelta;
 
         var newRotation = Quaternion.RotateTowards(
             transform.rotation,

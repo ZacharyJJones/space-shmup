@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 public class HoverSelectable : MonoBehaviour
 {
     // Editor Vars
+    public string Key;
+
     public float TimeToSelect = 2f;
     public float WiggleArea = 0.2f;
 
@@ -22,21 +24,20 @@ public class HoverSelectable : MonoBehaviour
     public delegate void onSelected(HoverSelectable sender);
     public event onSelected OnSelected;
     private bool _isHovered;
-    private float _timeProgress;
-    private float _lerpVal => _timeProgress / TimeToSelect;
+    private float _progress;
 
-    private float _randomInWiggleArea => _lerpVal * _lerpVal * Random.Range(-WiggleArea, WiggleArea);
+    private float _randomInWiggleArea => _progress * _progress * Random.Range(-WiggleArea, WiggleArea);
 
 
     private void Start()
     {
         _isHovered = false;
-        _timeProgress = 0f;
+        _progress = 0f;
     }
 
     private void Update()
     {
-        ProgressImage.fillAmount = _lerpVal;
+        ProgressImage.fillAmount = _progress;
     }
 
     private void FixedUpdate()
@@ -47,13 +48,13 @@ public class HoverSelectable : MonoBehaviour
         if (_isHovered)
         {
             _selecting();
-            _timeProgress += time;
-            if (_lerpVal >= 1.0f)
+            _progress += time / TimeToSelect;
+            if (_progress >= 1.0f)
                 _selected();
         }
-        else if (_timeProgress > 0f)
+        else if (_progress > 0f)
         {
-            _timeProgress = Mathf.Clamp(_timeProgress - time * 2f, 0f, TimeToSelect);
+            _progress = Mathf.Max(0f, _progress - 2 * time);
         }
     }
 
@@ -91,7 +92,7 @@ public class HoverSelectable : MonoBehaviour
 
     public void Ignored(HoverSelectable sender)
     {
-        sender.OnSelected -= Ignored;
-        Destroy(gameObject);
+        // sender.OnSelected -= Ignored;
+        Destroy(this.gameObject);
     }
 }

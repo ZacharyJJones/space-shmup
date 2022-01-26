@@ -58,7 +58,7 @@ public class EntityManager : MonoBehaviour
 
     public Entity GetRandom(EntityType type)
     {
-        if (!Entities.TryGetValue(type, out var list) || list.Count <= 0)
+        if (!Entities.TryGetValue(type, out var list) || list.Count == 0)
             return null;
 
         int i = Random.Range(0, list.Count);

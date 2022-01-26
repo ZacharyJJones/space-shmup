@@ -15,12 +15,14 @@ public static class Utils
 
         return new Vector3(x, y);
     }
+
     public static bool IsPointInCollider(Vector3 position, BoxCollider2D collider)
     {
         var bounds = collider.bounds;
         return (position.x >= bounds.min.x && position.x <= bounds.max.x)
                && (position.y >= bounds.min.y && position.y <= bounds.max.y);
     }
+
     public static Vector3 ConstrainWithinCollider(Vector3 desiredPosition, BoxCollider2D collider)
     {
         var bounds = collider.bounds;
@@ -31,42 +33,16 @@ public static class Utils
         ;
     }
 
+
     /// <summary> Returns the heading (North being 0 degrees, clockwise rotation) equivalent for the vector given. </summary>
     /// <param name="normalizedVectorToTarget"> The normalized vector from which a heading is to be determined. </param>
     public static float HeadingFromNormalizedVector(Vector3 normalizedVectorToTarget)
     {
-        // Note for future self:
-        /*
-            Simply using "Mathf.Acos(normalizedVectorToTarget.x)*Mathf.Rad2Deg"
-            ... provides the correct value in degrees, but when y < 0 the result needs to be negative (not positive)
-        */
-
-
-        // This works perfectly EXCEPT it does not play nicely with the homing wiggle effect.
         float headingToTarget = Mathf.Acos(normalizedVectorToTarget.x) * Mathf.Rad2Deg;
         if (normalizedVectorToTarget.y < 0)
             headingToTarget = 360 - headingToTarget;
 
         return headingToTarget;
-    }
-
-    /// <summary> Returns the result of Sin(t), normalized such that one wave period occurs over an increment of 1. </summary>
-    /// <param name="t"> Input value, used like interpolation, should be between 0-1. </param>
-    /// <param name="xOffset"> X offset for sine wave. </param>
-    /// <param name="magnitude"> The most extreme y-value deviation from the midline that this function will return. </param>
-    /// <param name="midline"> The 'y-value' for the center between the peaks and troughs of the wave. </param>
-    public static float Sine(float t, float xOffset = 0, float magnitude = 0.5f, float midline = 0.5f)
-    {
-        /* sample values for: magnitude 0.5, center @ y=0.5, period = 1
-            [0.00 ,   0.50],
-            [0.25 ,     1.00],
-            [0.50 ,   0.50],
-            [0.75 , 0.00],
-            [1.00 ,   0.50]
-        */
-
-        const double TWO_PI = System.Math.PI * 2.0;
-        return (float)(System.Math.Sin(TWO_PI * (t + xOffset)) * magnitude + midline);
     }
 
     public static IEnumerator SimpleWait(float waitTime, Action onComplete)
@@ -77,6 +53,16 @@ public static class Utils
         }
 
         onComplete?.Invoke();
+    }
+
+    public static IEnumerator SimpleWaitConditional(Func<bool> completeWhenTrue, Action onComplete)
+    {
+        while (!completeWhenTrue.Invoke())
+        {
+            yield return null;
+        }
+
+        onComplete.Invoke();
     }
 
     public static IEnumerator DoOverTime(float timeToComplete, Action<float> whileActive, Action onComplete = null)
