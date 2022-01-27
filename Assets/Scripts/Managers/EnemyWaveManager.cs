@@ -4,6 +4,7 @@ using System.ComponentModel;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class EnemyWaveManager : MonoBehaviour
 {
@@ -77,6 +78,11 @@ public class EnemyWaveManager : MonoBehaviour
 
     public GameObject GetRandomEnemyFromWave()
     {
+        // "credit" cost per enemy would be decent. Then for a given wave could determine if wave is complete yet based
+        // ... on "credit value killed" or similar.
+        // --> more broadly applicable than just # of enemies
+        // --> enemies could also have settings for delay between this one spawning and the next, for more powerful foes
+
         return EnemyToSpawn;
         // Below code would be to select an enemy to spawn based on certain weights.
         // --> Probably want to change this, it would be cool to have groups/formations/patterns of enemies that spawn
@@ -134,12 +140,20 @@ public class EnemyWaveManager : MonoBehaviour
         // 3. spawn end-of-level choices
         StartCoroutine(Utils.SimpleWaitConditional(
             () => (EntityManager.Instance.GetRandom(EntityType.Enemy) == null),
-            _spawnEndOfLevelChoices
+            () => StartCoroutine(Utils.SimpleWait(2f, _spawnEndOfLevelChoices))
         ));
     }
 
     private void _spawnEndOfLevelChoices()
     {
+        string options = "AAEEIIOOUU BCDFGHJKLMNPQRSTVWXYZ 0123456789";
+        options = options.Replace(" ", "");
+        string[] areasToAssign = new string[3];
+        for (int i = 0; i < 3; i++)
+        {
+            areasToAssign[i] = options[UnityEngine.Random.Range(0, options.Length)].ToString();
+        }
+
         var areaChoicePrefab = Instantiate(
             AreaChoosePrefab,
             AreaPrefabSpawnLocation,
@@ -148,7 +162,7 @@ public class EnemyWaveManager : MonoBehaviour
         );
         var areaChange = areaChoicePrefab.GetComponent<HoverSelectAreaChange>();
         areaChange.DisplayText = UserInterfaceManager.Instance.AreaDisplayText;
-        areaChange.Areas = new[] {"A", "B", "C"};
+        areaChange.Areas = areasToAssign;
     }
 
     private void _nextWaveSetup()

@@ -10,27 +10,29 @@ public class HoverSelectable : MonoBehaviour
 {
     // Editor Vars
     public string Key;
-
-    public float TimeToSelect = 2f;
-    public float WiggleArea = 0.2f;
+    public Text KeyDisplayText;
+    public float TimeToSelect;
+    public float WiggleArea;
 
     public Canvas DisplayCanvas;
-    public Rigidbody2D Rigidbody;
-
     public Image ProgressImage;
+    public Rigidbody2D Rigidbody;
 
 
     // Runtime Vars
-    public delegate void onSelected(HoverSelectable sender);
-    public event onSelected OnSelected;
     private bool _isHovered;
     private float _progress;
+
+    public delegate void onSelected(HoverSelectable sender);
+    public event onSelected OnSelected;
+
 
     private float _randomInWiggleArea => _progress * _progress * Random.Range(-WiggleArea, WiggleArea);
 
 
     private void Start()
     {
+        KeyDisplayText.text = Key;
         _isHovered = false;
         _progress = 0f;
     }
@@ -71,7 +73,7 @@ public class HoverSelectable : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             _isHovered = false;
-            DisplayCanvas.transform.localPosition = new Vector3(0, 0, transform.localPosition.z);
+            DisplayCanvas.transform.localPosition = Vector3.zero;
         }
     }
 
@@ -92,7 +94,6 @@ public class HoverSelectable : MonoBehaviour
 
     public void Ignored(HoverSelectable sender)
     {
-        // sender.OnSelected -= Ignored;
         Destroy(this.gameObject);
     }
 }
