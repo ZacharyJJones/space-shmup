@@ -2,17 +2,24 @@
 
 public class Projectile : Entity
 {
-    // Editor Fields
-    public Team Team;
-    public AudioTrigger ImpactAudio;
-    public Rigidbody2D Rigidbody;
-
-    // Runtime Fields
-    public int Damage { get; set; }
-    public float Speed { get; set; }
-
     public override EntityType Type => EntityType.Projectile;
 
+    // Editor Fields
+    public Team Team; // seems like this should be set by the thing firing the projectile?
+    public Rigidbody2D Rigidbody;
+
+    // Properties, to not show up in editor. Public, because access needed by other components
+    public int Damage { get; set; }
+    public float Speed { get; set; }
+    private AudioClip _impactAudio;
+
+
+    public void Initialize(int damage, float speed, AudioClip impactAudio)
+    {
+        Damage = damage;
+        Speed = speed;
+        _impactAudio = impactAudio;
+    }
 
     private void FixedUpdate()
     {
@@ -27,7 +34,7 @@ public class Projectile : Entity
             return;
 
         damageable.TakeDamage(Damage);
-        AudioManager.Instance.PlayTrigger(ImpactAudio);
+        AudioSource.PlayClipAtPoint(_impactAudio, this.transform.position);
 
         var entityComponent = GetComponent<Entity>();
         if (entityComponent)
@@ -38,9 +45,4 @@ public class Projectile : Entity
     }
 
 
-    public void Initialize(int damage, float speed)
-    {
-        Damage = damage;
-        Speed = speed;
-    }
 }

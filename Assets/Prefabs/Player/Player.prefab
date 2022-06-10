@@ -592,7 +592,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProjectilePrefab: {fileID: 6882916464959500167, guid: e82104a095f39de49b7e99b7af9eea4e,
     type: 3}
-  FiringSound: 2
+  FiringAudio: {fileID: 8300000, guid: af76e7f30e99af0439187af7ff7a30ae, type: 3}
+  ImpactAudio: {fileID: 8300000, guid: a07dad05a369dae43bf4acfad27d9302, type: 3}
   FireGroups:
   - FireLocations:
     - {fileID: 1449563473891977385}
@@ -652,6 +653,7 @@ GameObject:
   - component: {fileID: 1199335851508047246}
   - component: {fileID: 1916926851955513423}
   - component: {fileID: 7199051982398798060}
+  - component: {fileID: 5411564026013576518}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -688,7 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ee3023bdacc1642b8ace60b339d869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 5
+  MaxHealth: 3
 --- !u!114 &1199335851508047246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,7 +722,7 @@ MonoBehaviour:
   DanmakuCollider: {fileID: 911948854611385768}
   DanmakuShieldCollider: {fileID: 3079057192884300220}
   ShieldTime: 3
-  EndShieldScale: 0
+  EndShieldScale: 200
 --- !u!58 &7199051982398798060
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -737,6 +739,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.4
+--- !u!114 &5411564026013576518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5435593663482730665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1cd9ceafd025e4ea1ea09746540cff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneBuildIndex: 0
 --- !u!1 &5677415856878494952
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,7 +880,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProjectilePrefab: {fileID: 6309264265038603776, guid: 04c5ffae640ecc54c9014cd6383a63df,
     type: 3}
-  FiringSound: 5
+  FiringAudio: {fileID: 8300000, guid: 8fe89eb8436699e4d878065342e531c6, type: 3}
+  ImpactAudio: {fileID: 8300000, guid: 65ad7a368e1573540a9bb185dbf4c487, type: 3}
   FireGroups:
   - FireLocations:
     - {fileID: 813954572705568135}
@@ -1057,9 +1073,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6821279581356813169}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.65, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.25000012, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.64999986, z: 1}
   m_Children: []
   m_Father: {fileID: 5653436421086674160}
   m_RootOrder: 0
@@ -1103,7 +1119,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1039168305
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 8242351c4d9a3484abf47438f87ab50d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

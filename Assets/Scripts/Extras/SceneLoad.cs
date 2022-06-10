@@ -10,6 +10,7 @@ public class SceneLoad : MonoBehaviour
 
     public void LoadScene()
     {
+        Debug.Log($"Loading Scene #{SceneBuildIndex}", this);
         SceneManager.LoadScene(SceneBuildIndex);
     }
 }

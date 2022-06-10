@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DanmakuType: {fileID: 2971012954860393369}
+  FiringAudio: {fileID: 8300000, guid: 5e311755c95803a418dcb5ee43273389, type: 3}
   Speed:
     _min: 3
     _max: 3

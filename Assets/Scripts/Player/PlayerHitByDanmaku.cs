@@ -55,7 +55,7 @@ public class PlayerHitByDanmaku : MonoBehaviour
             ShieldTime,
             (t) =>
             {
-                float scale = Mathf.Lerp(_startingShieldScale, 200f, t);
+                float scale = Mathf.Lerp(_startingShieldScale, EndShieldScale, t);
                 _scaleDanmakuShield(scale);
             },
             () =>

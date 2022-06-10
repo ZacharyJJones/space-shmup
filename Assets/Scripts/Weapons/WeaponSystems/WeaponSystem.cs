@@ -5,7 +5,8 @@ public class WeaponSystem : MonoBehaviour
 {
     // Editor Fields
     public GameObject ProjectilePrefab;
-    public AudioTrigger FiringSound;
+    public AudioClip FiringAudio;
+    public AudioClip ImpactAudio;
     public FireGroup[] FireGroups;
     public WeaponSystemParams Params;
 
@@ -14,12 +15,13 @@ public class WeaponSystem : MonoBehaviour
     private int[] _fireLocsTracking;
 
 
-    public virtual void OnAwake()
+    protected void OnAwake()
     {
         _fireLocsTracking = new int[FireGroups.Length];
     }
 
-    public virtual void OnFixedUpdate()
+    // For inheritors of WeaponSystem to call
+    protected void OnFixedUpdate()
     {
         if (!Params.CanFire)
             return;
@@ -53,30 +55,26 @@ public class WeaponSystem : MonoBehaviour
                 // increment then constrain value
                 _fireLocsTracking[i]++;
                 _fireLocsTracking[i] %= FireGroups[i].FireLocations.Length;
-                //
-                // var gameObject = Instantiate(
-                //     ProjectilePrefab,
-                //     spawnPoint.position,
-                //     Quaternion.Euler(0, 0, spawnPoint.rotation.eulerAngles.z),
-                //     null
-                // );
-                //
+
+                // For rotation:
+                // - Just using Quaternion.identity did not work
+                // - Lerping between these two did work?
+                // - maybe just normalize the spawnpoint rotation OR just use the spawnpoint rotation.
                 var rotation = Quaternion.Lerp(Quaternion.identity, spawnPoint.rotation, 1f);
-                // var gameObject = Instantiate(ProjectilePrefab, spawnPoint.position, Quaternion.identity, null);
-                var gameObject = Instantiate(ProjectilePrefab, spawnPoint.position, rotation, null);
+
+
+                var projectileObj = Instantiate(ProjectilePrefab, spawnPoint.position, rotation, null);
+                AudioSource.PlayClipAtPoint(FiringAudio, this.transform.position);
 
                 // set up projectile stuff
-                var projectile = gameObject.GetComponent<Projectile>();
-                projectile.Initialize(Params.Damage, Params.Speed);
-                AudioManager.Instance.PlayTrigger(FiringSound);
+                var projectile = projectileObj.GetComponent<Projectile>();
+                projectile.Initialize(Params.Damage, Params.Speed, ImpactAudio);
 
                 PostInstantiation(projectile);
             }
         }
     }
 
-    public virtual void PostInstantiation(Projectile instantiated)
-    {
-        // empty for children to add functionality if needed
-    }
+    // Empty here, intended to be used by inheritors
+    public virtual void PostInstantiation(Projectile projectile) { }
 }

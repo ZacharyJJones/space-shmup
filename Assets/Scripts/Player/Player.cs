@@ -5,14 +5,20 @@ using UnityEngine;
 
 public class Player : Entity, IDamageable
 {
+    public override EntityType Type => EntityType.Player;
+
+
     // Editor Fields
     public int MaxHealth;
 
     // Runtime Fields
     private int _currentHealth;
+    private SceneLoad _sceneLoad;
 
-    public override EntityType Type => EntityType.Player;
-
+    protected void Awake()
+    {
+        _sceneLoad = GetComponent<SceneLoad>();
+    }
 
     protected override void Start()
     {
@@ -23,13 +29,13 @@ public class Player : Entity, IDamageable
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
+        Debug.Log($"Player took {damage} damage. HP is now {_currentHealth}.");
 
-        if (_currentHealth < 0)
+        if (_currentHealth <= 0)
         {
             _currentHealth = MaxHealth;
+            _sceneLoad.LoadScene();
         }
-
-        Debug.Log($"Player took {damage} damage. HP is now {_currentHealth}.");
     }
 
     // this handles receiving non-danmaku hits.

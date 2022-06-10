@@ -9,8 +9,8 @@ namespace DanmakU
     [AddComponentMenu("DanmakU/Danmaku Emitter")]
     public class DanmakuEmitter : DanmakuBehaviour
     {
-
         public DanmakuPrefab DanmakuType;
+        public AudioClip FiringAudio;
 
         public Range Speed = 5f;
         public Range AngularSpeed;

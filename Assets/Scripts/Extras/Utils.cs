@@ -4,14 +4,19 @@ using UnityEngine;
 
 public static class Utils
 {
+    public static int GetRandomNoRepeat(int maxExclusive, int last)
+    {
+        int rand = UnityEngine.Random.Range(0, maxExclusive);
+        return (last + 1 + rand) % maxExclusive;
+    }
+
     public static Vector3 GetRandomPointInCollider(BoxCollider2D collider)
     {
         var bounds = collider.bounds;
-        Vector3 min = bounds.min;
-        Vector3 max = bounds.max;
+        var (minBound, maxBound) = (bounds.min, bounds.max);
 
-        float x = UnityEngine.Random.Range(min.x, max.x);
-        float y = UnityEngine.Random.Range(min.y, max.y);
+        float x = UnityEngine.Random.Range(minBound.x, maxBound.x);
+        float y = UnityEngine.Random.Range(minBound.y, maxBound.y);
 
         return new Vector3(x, y);
     }
@@ -19,8 +24,9 @@ public static class Utils
     public static bool IsPointInCollider(Vector3 position, BoxCollider2D collider)
     {
         var bounds = collider.bounds;
-        return (position.x >= bounds.min.x && position.x <= bounds.max.x)
-               && (position.y >= bounds.min.y && position.y <= bounds.max.y);
+        var (minBound, maxBound) = (bounds.min, bounds.max);
+        var (x, y) = (position.x, position.y);
+        return (minBound.x <= x && x <= maxBound.x) && (minBound.y <= y && y <= maxBound.y);
     }
 
     public static Vector3 ConstrainWithinCollider(Vector3 desiredPosition, BoxCollider2D collider)

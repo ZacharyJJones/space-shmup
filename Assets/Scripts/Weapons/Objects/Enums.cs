@@ -4,7 +4,6 @@
 
     Player,
     Enemy,
-    
-    // for stuff like asteroids etc
-    Environment
+
+    Environment, // Asteroids, etc
 }
