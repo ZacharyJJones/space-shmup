@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,19 +12,30 @@ public class EnemyWaveManager : MonoBehaviour
     public static EnemyWaveManager Instance;
 
     // Editor Fields
+    [Header("UI")] public WaveProgressSlider WaveProgressSlider;
+    public Text AreaDisplayText;
+
+    [Header("Spawning")]
     public BoxCollider2D SpawnZone;
     public GameObject EnemyToSpawn;
     public float SpawnRate = 10f;
     public float SpawnThreshold = 20f;
 
+    [Header("Next-Area Selection")]
     public GameObject AreaChoosePrefab;
     public Vector3 AreaPrefabSpawnLocation;
 
     // Runtime Fields
-    [HideInInspector] public int WaveNumber;
-    [HideInInspector] public int EnemiesDefeatedThisWave;
-    [HideInInspector] public int EnemiesInWave;
     private float _spawnProgress;
+
+    private int _waveNumber;
+    private int _enemiesDefeatedThisWave;
+    private int _enemiesInWave;
+
+    // Properties
+
+    // if I do change to a credits-style system for wave progress, keeping this generic to start with is good.
+    private float _waveProgress => (float) _enemiesDefeatedThisWave / _enemiesInWave;
 
     // Events
     public delegate void WaveEndHandler(object sender);
@@ -54,7 +66,7 @@ public class EnemyWaveManager : MonoBehaviour
         Instance.OnWaveEnd += _onWaveEndEvent;
         Instance.OnWaveStart += _onWaveStartEvent;
 
-        WaveNumber = 0;
+        _nextWaveSetup();
         OnWaveStart.Invoke(this);
     }
 
@@ -125,19 +137,18 @@ public class EnemyWaveManager : MonoBehaviour
     {
         if (!enabled) return;
 
-        Debug.Log("Enemy was defeated");
-        EnemiesDefeatedThisWave++;
-        if (EnemiesDefeatedThisWave < EnemiesInWave)
+        // 1. Record enemy defeat
+        _enemiesDefeatedThisWave++;
+        WaveProgressSlider.SetValue(_waveProgress);
+        if (_enemiesDefeatedThisWave < _enemiesInWave)
             return;
 
-        // 1. Wave Prep & Enemy Spawner Disable
+        // 2. Wave Prep & Enemy Spawner Disable
         _nextWaveSetup();
-        Debug.Log("Wave Ended.");
         OnWaveEnd?.Invoke(this);
 
-
-        // 2. wait until all enemies are gone... then
-        // 3. spawn end-of-level choices
+        // 3. wait until all enemies are gone... then
+        // 4. spawn end-of-level choices
         StartCoroutine(Utils.SimpleWaitConditional(
             () => (EntityManager.Instance.GetRandom(EntityType.Enemy) == null),
             () => StartCoroutine(Utils.SimpleWait(2f, _spawnEndOfLevelChoices))
@@ -146,12 +157,17 @@ public class EnemyWaveManager : MonoBehaviour
 
     private void _spawnEndOfLevelChoices()
     {
-        string options = "AAEEIIOOUU BCDFGHJKLMNPQRSTVWXYZ 0123456789";
-        options = options.Replace(" ", "");
-        string[] areasToAssign = new string[3];
-        for (int i = 0; i < 3; i++)
+        var options = new string[]
         {
-            areasToAssign[i] = options[UnityEngine.Random.Range(0, options.Length)].ToString();
+            "AAEEIIOOUU",
+            "BCDFGHJKLMNPQRSTVWXYZ",
+            "0123456789"
+        };
+
+        var areasToAssign = new string[options.Length];
+        for (int i = 0; i < options.Length; i++)
+        {
+            areasToAssign[i] = options[i][UnityEngine.Random.Range(0, options[i].Length)].ToString();
         }
 
         var areaChoicePrefab = Instantiate(
@@ -161,28 +177,28 @@ public class EnemyWaveManager : MonoBehaviour
             this.transform
         );
         var areaChange = areaChoicePrefab.GetComponent<HoverSelectAreaChange>();
-        areaChange.DisplayText = UserInterfaceManager.Instance.AreaDisplayText;
+        areaChange.DisplayText = AreaDisplayText;
         areaChange.Areas = areasToAssign;
     }
 
     private void _nextWaveSetup()
     {
-        EnemiesDefeatedThisWave = 0;
-        WaveNumber++;
+        _waveNumber++;
+        _enemiesDefeatedThisWave = 0;
+        _enemiesInWave += 3;
+
         SpawnRate += 2f;
         SpawnThreshold += 1f;
-        EnemiesInWave += 3;
     }
 
 
     private void _onWaveEndEvent(object sender)
     {
-        Debug.Log("Wave Ended");
         enabled = false;
     }
     private void _onWaveStartEvent(object sender)
     {
-        Debug.Log("Wave Started");
+        WaveProgressSlider.SetValue(0);
         _spawnProgress = 0;
         enabled = true;
     }
